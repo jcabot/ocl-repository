@@ -1,0 +1,6 @@
+Name: EURent
+Tool: ArgoUML
+Description: Partial class diagram of a simulated EU-Rent company
+Notes: There are comparison between date types (but the type Date is not predefined in UML) and some operations on Strings that need to be adapted to be
+fully OCL-compliant
+

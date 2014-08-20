@@ -1,0 +1,36 @@
+
+-- BlackListed people cannot have active rentals
+context BlackListed inv NoRentalsBlackListed:
+self.rental->forAll(r | r.startDate < self.blackListedDate)
+
+-- The company must have a fleet of at least 100 cars
+context Car inv CarFleet: Car::allInstances()->size()>100
+
+-- Quote value is always greater than zero
+context Quote inv QuoteOverZero: self.value > 0
+
+-- Initially customers are not premium
+context Customer::premium: boolean init: false
+
+-- example of a derivation rule
+context Customer::discount: integer
+derive:
+if not self.premium then
+  if self.rental.car.carGroup->select(c|c.category=’high’)->size()>=5
+   then 15
+  else 0 endif
+else 30 endif
+
+-- example of a query operation
+context Car::mostPopular(): boolean
+body: Car::allInstances()->forAll(c1|c1<>self implies
+c1.rentalAgreement->size()<=self.rentalAgreement->size())
+
+
+-- example of an operation contract
+context Rental::newRental(id:Integer, price:Real, startingDate:Date, endingDate:Date, customer:Customer, carRegNum:String, pickupBranch: Branch, dropOffBranch: Branch)
+pre: customer.licenseExpDate>endingDate
+post: Rental.allInstances->one(r | r.oclIsNew() and r.oclIsTypeOf(Rental) and
+r.endingDate=endingDate and r.startingDate=startingDate and
+r.driver=customer and r.pickupBranch=pickupBranch and r.dropOffBranch=dropOffBranch and
+r.car=Car.allInstances()->any(c | c.regNum=carRegNum))
