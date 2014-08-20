@@ -1,0 +1,4 @@
+Name: OCL tutorial
+URL: http://modeling-languages.com/ocl-tutorial/
+Authors: Jordi Cabot and Martin Gogolla
+Description: Slides and OCL book chapter introducing the Object Constraint Language
