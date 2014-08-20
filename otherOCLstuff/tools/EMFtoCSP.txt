@@ -1,0 +1,3 @@
+Name: EMFtoCSP
+URL: https://github.com/atlanmod/EMFtoCSP
+Description: EMFtoCSP is a tool for the automatic verification of UML or EMF models annotated with OCL constraints. It can check automatically several correctness properties about the model, such as the satisfiability of the model or the lack of contradictory constraints
