@@ -1,0 +1,22 @@
+package eShop
+
+context Product inv minStock: Product::allInstances()->forAll(p|p.stock>=5)
+
+endpackage
+
+package eShop
+
+context Portal::removeGoldCategory(c:Customer):
+	pre: c.oclIsTypeOf(GoldCustomer) and c.sale->isEmpty()
+	post: not c.oclIsTypeOf(GoldCustomer)
+
+context Customer::newCustomer(name:Integer, p:Portal):Customer
+    pre: true
+    post: result.oclIsNew() and result.name=name and result.portal=p
+
+context Sale::addSaleLine(p:Product, quantity:Integer):SaleLine
+   pre: p.stock > 0
+   post: result.oclIsNew() and result.sale=self and result.product=p and result.quantity=quantity and
+	p.stock=p.stock@pre-quantity and self.amount=self.amount@pre + quantity*p.price
+
+endpackage
