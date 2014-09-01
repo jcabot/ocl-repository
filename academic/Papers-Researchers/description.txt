@@ -1,0 +1,5 @@
+Name: Papers-researchers
+Tool: UML Designer (Sirius)
+Description: Relationship between researchers and the papers they write or review
+Notes: 
+
