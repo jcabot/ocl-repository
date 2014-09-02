@@ -1,0 +1,19 @@
+package model
+
+context Paper 
+inv AuthorsOfStudentPaper: Paper::allInstances()->forAll(p|p.studentPaper = p.author->exists(x|x.isStudent))
+
+context Paper inv LimitsOnStudentPapers: 
+Paper::allInstances()->exists(p|p.studentPaper) and Paper::allInstances()->select(p|p.studentPaper)->size() < 5
+
+context Paper
+inv PaperLength: Paper::allInstances()->forAll(p|p.wordCount < 10000)
+
+--context Researcher
+--inv NoSelfReviews: Researcher::allInstances()->forAll(r|r.submission->excludes(r.manuscript))
+
+context Paper 
+inv NoStudentReviewers: Paper::allInstances()->forAll(p| p.referee->forAll(r| not r.isStudent))
+
+
+endpackage

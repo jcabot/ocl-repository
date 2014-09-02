@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_4IYq8SJCEeCSBbW7m2jaLA" name="model" URI="http://eShop.com">
+  <packagedElement xmi:type="uml:Class" xmi:id="_7qGeMCJCEeCSBbW7m2jaLA" name="Paper">
+    <ownedAttribute xmi:id="_m5wmUCJDEeCSBbW7m2jaLA" name="title" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_6lH9sCJDEeCSBbW7m2jaLA" name="wordCount" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_7UuOoCJDEeCSBbW7m2jaLA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_7Ux5ACJDEeCSBbW7m2jaLA" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_7U1jYCJDEeCSBbW7m2jaLA">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_A36xcCJEEeCSBbW7m2jaLA" name="studentPaper" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_B6XF4CJEEeCSBbW7m2jaLA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_B6b-YCJEEeCSBbW7m2jaLA" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_B6fowCJEEeCSBbW7m2jaLA">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_fY51gDLBEeClpMPmYa4ToA" name="newPaper">
+      <ownedParameter xmi:id="_fY51gTLBEeClpMPmYa4ToA" name="title">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/UML.metamodel.uml#String"/>
+      </ownedParameter>
+      <ownedParameter xmi:id="_fY51gjLBEeClpMPmYa4ToA" name="wc">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Integer"/>
+      </ownedParameter>
+      <ownedParameter xmi:id="_7ndV8DLBEeClpMPmYa4ToA" name="sp">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Boolean"/>
+      </ownedParameter>
+      <ownedParameter xmi:id="_fY51gzLBEeClpMPmYa4ToA" type="_7qGeMCJCEeCSBbW7m2jaLA" direction="return"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_9-Q5MCJCEeCSBbW7m2jaLA" name="Researcher">
+    <ownedAttribute xmi:id="_MQVQoCJDEeCSBbW7m2jaLA" name="name" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_N9wbwCJDEeCSBbW7m2jaLA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_N92iYCJDEeCSBbW7m2jaLA" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_N9-eMCJDEeCSBbW7m2jaLA">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_fdawkCJDEeCSBbW7m2jaLA" name="isStudent" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ja1BUCJDEeCSBbW7m2jaLA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ja5SwCJDEeCSBbW7m2jaLA" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_ja89ICJDEeCSBbW7m2jaLA">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_KY_fECJEEeCSBbW7m2jaLA" name="Reviews" memberEnd="_KZAGICJEEeCSBbW7m2jaLA _KY7NoCJEEeCSBbW7m2jaLA">
+    <ownedEnd xmi:id="_KZAGICJEEeCSBbW7m2jaLA" name="referee" type="_9-Q5MCJCEeCSBbW7m2jaLA" association="_KY_fECJEEeCSBbW7m2jaLA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KZAGIiJEEeCSBbW7m2jaLA" value="3"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KZAGISJEEeCSBbW7m2jaLA" value="3"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_KY7NoCJEEeCSBbW7m2jaLA" name="submission" type="_7qGeMCJCEeCSBbW7m2jaLA" association="_KY_fECJEEeCSBbW7m2jaLA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KY7NoiJEEeCSBbW7m2jaLA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KY7NoSJEEeCSBbW7m2jaLA" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_x7QIYCJEEeCSBbW7m2jaLA" name="Writes" memberEnd="_x7QIYSJEEeCSBbW7m2jaLA _x7NFECJEEeCSBbW7m2jaLA">
+    <ownedEnd xmi:id="_x7QIYSJEEeCSBbW7m2jaLA" name="manuscript" type="_7qGeMCJCEeCSBbW7m2jaLA" association="_x7QIYCJEEeCSBbW7m2jaLA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_x7QvcSJEEeCSBbW7m2jaLA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_x7QvcCJEEeCSBbW7m2jaLA" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_x7NFECJEEeCSBbW7m2jaLA" name="author" type="_9-Q5MCJCEeCSBbW7m2jaLA" association="_x7QIYCJEEeCSBbW7m2jaLA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_x7NFEiJEEeCSBbW7m2jaLA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_x7NFESJEEeCSBbW7m2jaLA" value="2"/>
+    </ownedEnd>
+  </packagedElement>
+  <profileApplication xmi:id="_lmlaECVrEeC27LuEURS6Mw">
+    <eAnnotations xmi:id="_ogsawCVrEeC27LuEURS6Mw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/uml2/4.0.0/UML/Profile/L2#/"/>
+    </eAnnotations>
+    <appliedProfile href="pathmap://UML_PROFILES/StandardL2.profile.uml#_0"/>
+  </profileApplication>
+  <profileApplication xmi:id="_HCtfkAXeEeOw8PbakrlOTg">
+    <eAnnotations xmi:id="_HCvUwAXeEeOw8PbakrlOTg" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/uml2/4.0.0/UML/Profile/L3#/"/>
+    </eAnnotations>
+    <appliedProfile href="pathmap://UML_PROFILES/StandardL3.profile.uml#_0"/>
+  </profileApplication>
+</uml:Model>

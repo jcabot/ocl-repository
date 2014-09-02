@@ -1,0 +1,5 @@
+Name: Eshop
+Tool: UML Designer (Sirius)
+Description: E-commerce class diagram with OCL operations
+Notes: 
+
