@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:style="http://www.eclipse.org/papyrus/infra/viewpoints/policy/style" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_qR6yIDUEEeSN-4fOcV93ow" type="PapyrusUMLClassDiagram" name="NewDiagram" measurementUnit="Pixel">
+  <children xmi:type="notation:Shape" xmi:id="_JvGREDUNEeSN-4fOcV93ow" type="2008">
+    <children xmi:type="notation:DecorationNode" xmi:id="_JvGREjUNEeSN-4fOcV93ow" type="5029"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_JvG4IDUNEeSN-4fOcV93ow" type="7017">
+      <children xmi:type="notation:Shape" xmi:id="_K55QQDUNEeSN-4fOcV93ow" type="3012">
+        <element xmi:type="uml:Property" href="Papers-ResearchersSAT.uml#_m5wmUCJDEeCSBbW7m2jaLA"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_K55QQTUNEeSN-4fOcV93ow"/>
+      </children>
+      <children xmi:type="notation:Shape" xmi:id="_LQ5bADUNEeSN-4fOcV93ow" type="3012">
+        <element xmi:type="uml:Property" href="Papers-ResearchersSAT.uml#_6lH9sCJDEeCSBbW7m2jaLA"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_LQ5bATUNEeSN-4fOcV93ow"/>
+      </children>
+      <children xmi:type="notation:Shape" xmi:id="_Lk5VEDUNEeSN-4fOcV93ow" type="3012">
+        <element xmi:type="uml:Property" href="Papers-ResearchersSAT.uml#_A36xcCJEEeCSBbW7m2jaLA"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Lk5VETUNEeSN-4fOcV93ow"/>
+      </children>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_JvG4ITUNEeSN-4fOcV93ow"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_JvG4IjUNEeSN-4fOcV93ow"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_JvG4IzUNEeSN-4fOcV93ow"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JvG4JDUNEeSN-4fOcV93ow"/>
+    </children>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_JvG4JTUNEeSN-4fOcV93ow" type="7018">
+      <children xmi:type="notation:Shape" xmi:id="_L2e0UDUNEeSN-4fOcV93ow" type="3013">
+        <element xmi:type="uml:Operation" href="Papers-ResearchersSAT.uml#_fY51gDLBEeClpMPmYa4ToA"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_L2e0UTUNEeSN-4fOcV93ow"/>
+      </children>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_JvG4JjUNEeSN-4fOcV93ow"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_JvG4JzUNEeSN-4fOcV93ow"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_JvG4KDUNEeSN-4fOcV93ow"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JvG4KTUNEeSN-4fOcV93ow"/>
+    </children>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_JvG4KjUNEeSN-4fOcV93ow" type="7019">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_JvG4KzUNEeSN-4fOcV93ow"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_JvG4LDUNEeSN-4fOcV93ow"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_JvG4LTUNEeSN-4fOcV93ow"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JvG4LjUNEeSN-4fOcV93ow"/>
+    </children>
+    <element xmi:type="uml:Class" href="Papers-ResearchersSAT.uml#_7qGeMCJCEeCSBbW7m2jaLA"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JvGRETUNEeSN-4fOcV93ow" x="33" y="325"/>
+  </children>
+  <children xmi:type="notation:Shape" xmi:id="_KEbA0DUNEeSN-4fOcV93ow" type="2008">
+    <children xmi:type="notation:DecorationNode" xmi:id="_KEbn4DUNEeSN-4fOcV93ow" type="5029"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_KEbn4TUNEeSN-4fOcV93ow" type="7017">
+      <children xmi:type="notation:Shape" xmi:id="_MmlbkDUNEeSN-4fOcV93ow" type="3012">
+        <element xmi:type="uml:Property" href="Papers-ResearchersSAT.uml#_MQVQoCJDEeCSBbW7m2jaLA"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_MmlbkTUNEeSN-4fOcV93ow"/>
+      </children>
+      <children xmi:type="notation:Shape" xmi:id="_NRYsEDUNEeSN-4fOcV93ow" type="3012">
+        <element xmi:type="uml:Property" href="Papers-ResearchersSAT.uml#_fdawkCJDEeCSBbW7m2jaLA"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_NRYsETUNEeSN-4fOcV93ow"/>
+      </children>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_KEbn4jUNEeSN-4fOcV93ow"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_KEbn4zUNEeSN-4fOcV93ow"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_KEbn5DUNEeSN-4fOcV93ow"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_KEbn5TUNEeSN-4fOcV93ow"/>
+    </children>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_KEcO8DUNEeSN-4fOcV93ow" type="7018">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_KEcO8TUNEeSN-4fOcV93ow"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_KEcO8jUNEeSN-4fOcV93ow"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_KEcO8zUNEeSN-4fOcV93ow"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_KEcO9DUNEeSN-4fOcV93ow"/>
+    </children>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_KEcO9TUNEeSN-4fOcV93ow" type="7019">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_KEcO9jUNEeSN-4fOcV93ow"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_KEcO9zUNEeSN-4fOcV93ow"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_KEcO-DUNEeSN-4fOcV93ow"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_KEcO-TUNEeSN-4fOcV93ow"/>
+    </children>
+    <element xmi:type="uml:Class" href="Papers-ResearchersSAT.uml#_9-Q5MCJCEeCSBbW7m2jaLA"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_KEbA0TUNEeSN-4fOcV93ow" x="144" y="30"/>
+  </children>
+  <styles xmi:type="notation:StringValueStyle" xmi:id="_qR6yITUEEeSN-4fOcV93ow" name="diagram_compatibility_version" stringValue="1.0.0"/>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_qR6yIjUEEeSN-4fOcV93ow"/>
+  <styles xmi:type="style:PapyrusViewStyle" xmi:id="_qR6yIzUEEeSN-4fOcV93ow">
+    <owner xmi:type="uml:Model" href="Papers-ResearchersSAT.uml#_4IYq8SJCEeCSBbW7m2jaLA"/>
+  </styles>
+  <element xmi:type="uml:Model" href="Papers-ResearchersSAT.uml#_4IYq8SJCEeCSBbW7m2jaLA"/>
+  <edges xmi:type="notation:Connector" xmi:id="_N04asDUNEeSN-4fOcV93ow" type="4001" source="_KEbA0DUNEeSN-4fOcV93ow" target="_JvGREDUNEeSN-4fOcV93ow">
+    <children xmi:type="notation:DecorationNode" xmi:id="_N05BwDUNEeSN-4fOcV93ow" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_N05o0DUNEeSN-4fOcV93ow" y="-20"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_N06P4DUNEeSN-4fOcV93ow" type="6002">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_N06P4TUNEeSN-4fOcV93ow" y="10"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_N0628DUNEeSN-4fOcV93ow" type="6003">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_N0628TUNEeSN-4fOcV93ow" y="10"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_N07eADUNEeSN-4fOcV93ow" type="6005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_N07eATUNEeSN-4fOcV93ow" y="30"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_N08FEDUNEeSN-4fOcV93ow" type="6033">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_N08sIDUNEeSN-4fOcV93ow" x="-20" y="-18"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_N08sITUNEeSN-4fOcV93ow" type="6034">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_N09TMDUNEeSN-4fOcV93ow" y="-20"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_N04asTUNEeSN-4fOcV93ow"/>
+    <element xmi:type="uml:Association" href="Papers-ResearchersSAT.uml#_KY_fECJEEeCSBbW7m2jaLA"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_N04asjUNEeSN-4fOcV93ow" points="[0, 0, 62, -60]$[-63, 30, -1, -30]$[-62, 60, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TISOADUNEeSN-4fOcV93ow" id="(0.32903225806451614,1.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TISOATUNEeSN-4fOcV93ow" id="(0.24935064935064935,0.0)"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_OFqBoDUNEeSN-4fOcV93ow" type="4001" source="_JvGREDUNEeSN-4fOcV93ow" target="_KEbA0DUNEeSN-4fOcV93ow">
+    <children xmi:type="notation:DecorationNode" xmi:id="_OFqosDUNEeSN-4fOcV93ow" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_OFqosTUNEeSN-4fOcV93ow" y="-20"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_OFrPwDUNEeSN-4fOcV93ow" type="6002">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_OFrPwTUNEeSN-4fOcV93ow" y="10"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_OFrPwjUNEeSN-4fOcV93ow" type="6003">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_OFrPwzUNEeSN-4fOcV93ow" y="-30"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_OFr20DUNEeSN-4fOcV93ow" type="6005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_OFr20TUNEeSN-4fOcV93ow" y="20"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_OFsd4DUNEeSN-4fOcV93ow" type="6033">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_OFsd4TUNEeSN-4fOcV93ow" y="20"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_OFsd4jUNEeSN-4fOcV93ow" type="6034">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_OFsd4zUNEeSN-4fOcV93ow" x="-20" y="52"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_OFqBoTUNEeSN-4fOcV93ow"/>
+    <element xmi:type="uml:Association" href="Papers-ResearchersSAT.uml#_x7QIYCJEEeCSBbW7m2jaLA"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_OFqBojUNEeSN-4fOcV93ow" points="[0, 0, 64, 60]$[0, -29, 64, 31]$[-64, -60, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TIS1EDUNEeSN-4fOcV93ow" id="(0.7168831168831169,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TIS1ETUNEeSN-4fOcV93ow" id="(0.6645161290322581,1.0)"/>
+  </edges>
+</notation:Diagram>
