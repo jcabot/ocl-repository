@@ -1,0 +1,19 @@
+Example for students exercices
+==============================
+Jean-Michel Bruel (bruel@irit.fr) -- 2014
+
+== Context
+
+This is just to see if everything works.
+
+== Level of expertize
+
+Beginner
+
+== Description
+
+OCL expression to specify the +debit()+ operation of the +Account+ class.
+
+== Details
+
+Better graphical representation, and XMI files will follow ;-)
