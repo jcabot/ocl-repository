@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright Nomoseire Limited trading as Nomos Software 2010 -->
+<ruleset xmlns:ocl="http://localhost:8080/rules/ocl" xmlns:jclass="http://localhost:8080/rules/jclass" xmlns:xrpc="http://localhost:8080/rules/xrpc" name="ocl" context="urn_iso_std_iso_20022_tech_xsd_pain_008_001_01" inferencing="Script" conflictResolution="Priority">
+  <definitions />
+  <rules>
+    
+  	
+
+	<rule name="AmendmentIndicatorRule" type="invariant" context="MandateRelatedInformation1" priority="99" isActive="true" description="If AmendmentIndicator is true, then AmendmentInformationDetails must be present, with amended mandate&#xD;&#xA;information.&#xD;&#xA;&#xD;&#xA;If AmendmentIndicator is false, then AmendmentInformationDetails is not allowed.&#xD;&#xA;&#xD;&#xA;Ref. p.99 of Payments_Standards-Initiation_updated.pdf." message=""><ocl><![CDATA[(AmdmntInd=true implies AmdmntInfDtls->size()>0) and
+(AmdmntInd=false implies AmdmntInfDtls->size()=0)]]></ocl></rule><rule name="ChargeBearerRule" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="If ChargeBearer is present, then DirectDebitTransactionInformation/ChargeBearer is not allowed.&#xD;&#xA;If DirectDebitTransactionInformation/ChargeBearer is present, then ChargeBearer is not allowed.&#xD;&#xA;DirectDebitTransactionInformation/ChargeBearer and ChargeBearer may both be absent.&#xD;&#xA;&#xD;&#xA;Ref. p.86 of Payment-standards Initiation updated.pdf" message=""><ocl><![CDATA[(ChrgBr->size() > 0 implies DrctDbtTxInf.ChrgBr->size() = 0) and
+(DrctDbtTxInf.ChrgBr->size() > 0 implies ChrgBr->size() = 0)]]></ocl></rule><rule name="ChargesAccountAgentRule" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="If ChargesAccountAgent is present, it must contain a branch of the CreditorAgent. It must not contain a&#xD;&#xA;completely different financial institution.&#xD;&#xA;&#xD;&#xA;Ref. p.86 of Payments_Standards-Initiation_updated.pdf." message=""><ocl><![CDATA[ChrgsAcctAgt->size() = 1 implies 
+CdtrAgt.BrnchId->size() = 1 and
+ChrgsAcctAgt.FinInstnId.ClrSysMmbId = CdtrAgt.FinInstnId.ClrSysMmbId and
+ChrgsAcctAgt.FinInstnId.CmbndId = CdtrAgt.FinInstnId.CmbndId and
+ChrgsAcctAgt.FinInstnId.NmAndAdr = CdtrAgt.FinInstnId.NmAndAdr and
+ChrgsAcctAgt.FinInstnId.PrtryId = CdtrAgt.FinInstnId.PrtryId and
+ChrgsAcctAgt.FinInstnId.BIC = CdtrAgt.FinInstnId.BIC]]></ocl></rule><rule name="ChargesAccountRule" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="If ChargesAccountAgent is present, then ChargesAccount must be present.&#xD;&#xA;&#xD;&#xA;Ref. p.86 of Payments_Standards-Initiation_updated.pdf." message=""><ocl><![CDATA[ChrgsAcctAgt->size() > 0 implies ChrgsAcct->size() >0]]></ocl></rule><rule name="EPC_AOS_Cdtr" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="Warning: The elements PstlAdr AdrTp, PstlAdr StrtNm, PstlAdr BldgNb, PstlAdr PstCd, PstlAdr TwnNm, PstlAdr CtrySubDvsn, Id and CtryOfRes in PmtInf Cdtr are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[Cdtr.PstlAdr.AdrTp->size() = 0 and 
+Cdtr.PstlAdr.StrtNm->size() = 0 and 
+Cdtr.PstlAdr.BldgNb->size() = 0 and 
+Cdtr.PstlAdr.PstCd->size() = 0 and 
+Cdtr.PstlAdr.TwnNm->size() = 0 and 
+Cdtr.PstlAdr.CtrySubDvsn->size() = 0 and 
+Cdtr.Id->size() = 0 and 
+Cdtr.CtryOfRes->size() = 0]]></ocl></rule><rule name="EPC_AOS_CdtrAcct" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="Warning: The elements Tp and Nm in PmtInf CdtrAcct are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[CdtrAcct.Tp->size() = 0 and
+CdtrAcct.Nm->size() = 0]]></ocl></rule><rule name="EPC_AOS_CdtrAgtAcct" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="Warning: The element CdrAgtAcct in PmtInf is AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[CdtrAgtAcct->size() = 0]]></ocl></rule><rule name="EPC_AOS_CdtrSchmeId" type="invariant" context="DirectDebitTransaction1" priority="99" isActive="true" description="Warning: The elements Nm, PstlAdr, Id OrgId and CtryOfRes in DrctDbtTx CdtrSchmeId are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[CdtrSchmeId.Nm->size() = 0 and 
+CdtrSchmeId.PstlAdr->size() = 0 and 
+CdtrSchmeId.Id.OrgId->size() = 0 and 
+CdtrSchmeId.CtryOfRes->size() = 0]]></ocl></rule><rule name="EPC_AOS_ChrgsAcct" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="Warning: The element ChrgsAcct in PmtInf is AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[ChrgsAcct->size() = 0]]></ocl></rule><rule name="EPC_AOS_ChrgsAcctAgt" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="Warning: The element ChrgsAcctAgt in PmtInf is AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[ChrgsAcctAgt->size() = 0]]></ocl></rule><rule name="EPC_AOS_DbtrAgtAcct" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Warning: The element DbtrAgtAcct in DrctDbtTxInf is AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[DbtrAgtAcct->size() = 0]]></ocl></rule><rule name="EPC_AOS_DrctDbtTx" type="invariant" context="DirectDebitTransaction1" priority="99" isActive="true" description="Warning: The elements PreNtfctnId and PreNtfctnDt in DrctDbtTx are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[PreNtfctnId->size() = 0 and  
+PreNtfctnDt->size() = 0]]></ocl></rule><rule name="EPC_AOS_DrctDbtTxInf" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Warning: The elements RgltryRptg, Tax and RltdRmtInf in DrctDbtTxInf are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[RgltryRptg->size() = 0 and 
+Tax->size() = 0 and
+RltdRmtInf->size() = 0]]></ocl></rule><rule name="EPC_AOS_DrctDbtTxInfDbtr" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Warning: The elements PstlAdr AdrTp, PstlAdr StrtNm, PstlAdr BldgNb, PstlAdr PstCd, PstlAdr TwnNm, PstlAdr CtrySubDvsn and CtryOfRes in DrctDbtTxInf Dbtr are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[Dbtr.PstlAdr.AdrTp->size() = 0 and 
+Dbtr.PstlAdr.StrtNm->size() = 0 and 
+Dbtr.PstlAdr.BldgNb->size() = 0 and 
+Dbtr.PstlAdr.PstCd->size() = 0 and 
+Dbtr.PstlAdr.TwnNm->size() = 0 and 
+Dbtr.PstlAdr.CtrySubDvsn->size() = 0 and
+Dbtr.CtryOfRes->size() = 0]]></ocl></rule><rule name="EPC_AOS_DrctDbtTxInfPmtTpInf" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Warning: The element PmtTpInf in DrctDbtTxInf is AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[PmtTpInf->size() = 0]]></ocl></rule><rule name="EPC_AOS_DrctDbtTxInfPurpPrtry" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Warning: The element Prtry in DrctDbtTxInf Purpose is AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[Purp.Prtry->size() = 0]]></ocl></rule><rule name="EPC_AOS_DrctDbtTxInfUltmtCdtr" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Warning: The elements PstlAdr and CtryOfRes in DrctDbtTxInf UltmtCdtr are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[UltmtCdtr.PstlAdr->size() = 0 and
+UltmtCdtr.CtryOfRes->size() = 0]]></ocl></rule><rule name="EPC_AOS_DrctDbtTxInfUltmtDbtr" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Warning: The elements PstlAdr and CtryOfRes in DrctDbtTxInf UltmtDbtr are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[UltmtDbtr.PstlAdr->size() = 0 and
+UltmtDbtr.CtryOfRes->size() = 0]]></ocl></rule><rule name="EPC_AOS_GrpHdr" type="invariant" context="GroupHeader1" priority="99" isActive="true" description="Warning: The elements Authstn, FwdgAgt, InitgPty PstlAdr and InitgPty CtryOfRes in GrpHdr are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[Authstn->size() = 0 and
+FwdgAgt->size() = 0 and 
+InitgPty.PstlAdr->size() = 0 and 
+InitgPty.CtryOfRes->size() = 0
+]]></ocl></rule><rule name="EPC_AOS_InstrForCdtrAgt" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Warning: The element InstrForCdtrAgt in DrctDbtTxInf is AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[InstrForCdtrAgt->size() = 0]]></ocl></rule><rule name="EPC_AOS_MndtRltInf" type="invariant" context="MandateRelatedInformation1" priority="99" isActive="true" description="Warning: The elements FrstColltnDt, FnlColltnDt and Frqcy in MndtRltInf are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[FrstColltnDt->size() = 0 and 
+FnlColltnDt->size() = 0 and 
+Frqcy->size() = 0]]></ocl></rule><rule name="EPC_AOS_MndtRltInfAmdmntInfDtls" type="invariant" context="AmendmentInformationDetails1" priority="99" isActive="true" description="Warning: The elements OrgnlCdtrSchmeId PstlAdr, OrgnlCdtrSchmeId Id OrgId, OrgnlCdtrSchmeId CtryOfRes, OrgnlCdtrAgt, OrgnlCdtrAgtAcct, OrgnlDbtr, OrgnlDbtrAgtAcct, OrgnlFnlColltnDt and OrgnlFrqcy in MndtRltInf AmdmntInfDtls are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[OrgnlCdtrSchmeId.PstlAdr->size() = 0 and 
+OrgnlCdtrSchmeId.Id.OrgId->size() = 0 and 
+OrgnlCdtrSchmeId.CtryOfRes->size() = 0 and 
+OrgnlCdtrAgt->size() = 0 and 
+OrgnlCdtrAgtAcct->size() = 0 and 
+OrgnlDbtr->size() = 0 and 
+OrgnlDbtrAgtAcct->size() = 0 and 
+OrgnlFnlColltnDt->size() = 0 and
+OrgnlFrqcy->size() = 0]]></ocl></rule><rule name="EPC_AOS_PmtTpInf" type="invariant" context="PaymentTypeInformation2" priority="99" isActive="true" description="Warning: The elements InstrPrty, SvcLvl Prtry, ClrChanl and LclInstrm Prtry in PmtTpInf are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[InstrPrty->size() = 0 and
+SvcLvl.Prtry->size() = 0 and 
+ClrChanl->size() = 0 and 
+LclInstrm.Prtry->size() = 0
+]]></ocl></rule><rule name="EPC_AOS_RmtInfStrd" type="invariant" context="RemittanceInformation1" priority="99" isActive="true" description="Warning: The elements RfrdDocInf, RfrdDocRltdDt, RfrdDocAmt, CdtrRefInf CdtrRefTp Prtry, Invcr, Invcee and AddtlRmtInf in RmtInf Strd are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[Strd.RfrdDocInf->size() = 0 and 
+Strd.RfrdDocRltdDt->size() = 0 and 
+Strd.RfrdDocAmt->size() = 0 and
+Strd.CdtrRefInf.CdtrRefTp.Prtry->size() = 0 and
+Strd.Invcr->size() = 0 and 
+Strd.Invcee->size() = 0 and 
+Strd.AddtlRmtInf->size() = 0]]></ocl></rule><rule name="EPC_AOS_UltmtCdtr" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="Warning: The elements PstlAdr and CtryOfRes in PmtInf UltmtCdtr are AOS only. Instructed banks that are not in the AOS community may reject messages containing these elements.&#xD;&#xA;&#xD;&#xA;Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[UltmtCdtr.PstlAdr->size() = 0 and
+UltmtCdtr.CtryOfRes->size() = 0]]></ocl></rule><rule name="EPC_CdtrAcctId" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="For Creditor Account Id (PmtInf CdtrAcct Id), only IBAN is allowed. &#xD;&#xA;&#xD;&#xA;See row 18 on page 8 of SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[CdtrAcct.Id.BBAN->size() = 0 and CdtrAcct.Id.PrtryAcct->size() = 0 and CdtrAcct.Id.UPIC->size() = 0]]></ocl></rule><rule name="EPC_CdtrAdrLine" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="Only two occurrences of AdrLine are allowed for a Creditor (PmtInf Cdtr PstlAdr AdrLine).&#xD;&#xA;&#xD;&#xA;See row 8 on page 8 of SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[Cdtr.PstlAdr.AdrLine->size() >0 implies Cdtr.PstlAdr.AdrLine->size() <= 2]]></ocl></rule><rule name="EPC_CdtrAgtFinInstnId" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="For CreditorAgent (PmtInf CdtrAgt FinInstnId), only BIC is allowed. &#xD;&#xA;&#xD;&#xA;See row 1 page 9 of SEPA B2B Direct Debit C2B Implementation Guidelines.&#xD;&#xA;" message=""><ocl><![CDATA[CdtrAgt.FinInstnId.ClrSysMmbId->size() = 0
+and CdtrAgt.FinInstnId.NmAndAdr->size() =0
+and CdtrAgt.FinInstnId.PrtryId->size() = 0
+and CdtrAgt.FinInstnId.CmbndId->size() =0
+and CdtrAgt.BrnchId->size() = 0]]></ocl></rule><rule name="EPC_CdtrNm" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="Creditor Name (PmtInf Cdtr Nm) is mandatory. &#xD;&#xA;&#xD;&#xA;See row 5 on pg 8 of SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[Cdtr.Nm->size() > 0]]></ocl></rule><rule name="EPC_CdtrSchmeId" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="It is recommended that all transactions within the same 'Payment Information' block have the same 'Creditor Scheme Identification'. Note: this rule only checks PrvtId OthrId since this the only Id that can be used in pacs3. Rule EPC_CdtrSchmeId_UNUSED_FULL can be enabled if this is inadequate.&#xD;&#xA;&#xD;&#xA;Ref pg 11, row 14, SEPA C2B Implementation Guidelines." message=""><ocl><![CDATA[DrctDbtTxInf.DrctDbtTx.CdtrSchmeId->forAll(a, b | 
+  a.Id.PrvtId.OthrId.Id = b.Id.PrvtId.OthrId.Id and
+  a.Id.PrvtId.OthrId.IdTp = b.Id.PrvtId.OthrId.IdTp)]]></ocl></rule><rule name="EPC_CdtrSchmeId_PrvtId_SEPA" type="invariant" context="DirectDebitTransaction1" priority="99" isActive="true" description="'Identification Type'  under 'Other Identification' for Credit Scheme Identification Private Ids (CdtrSchmeId Id PrvtId OthrId IdTp) must specify 'SEPA'.&#xD;&#xA;&#xD;&#xA;See row 3 of page 12 SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[CdtrSchmeId.Id.PrvtId->forAll(a | a.OthrId.IdTp='SEPA')]]></ocl></rule><rule name="EPC_CdtrSchmeId_PrvtIdOnlyOne" type="invariant" context="DirectDebitTransaction1" priority="99" isActive="true" description="Only one occurrence of 'Private Identification' is allowed for Creditor Schemes (CdtrSchmeId Id PrvtId).&#xD;&#xA;&#xD;&#xA;See row 3 of page 12 SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[CdtrSchmeId.Id.PrvtId->size() <=1 ]]></ocl></rule><rule name="EPC_CdtrSchmeId_UNUSED_FULL" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="false" description="It is recommended that all transactions within the same 'Payment Information' block have the same 'Creditor Scheme Identification'. Note: This rule checks all fields except postal addresses and DateAndPlaceOfBirth are the same. However, most checks are not needed because (a) the Nm, postal address and OrgId fields are excluded except for the AOS community, and (b) these fields as well as all PrvtId fields other than OthrId are excluded in pacs3. &#xD;&#xA;&#xD;&#xA;Ref pg 11, row 14, SEPA C2B Implementation Guidelines." message=""><ocl><![CDATA[DrctDbtTxInf.DrctDbtTx.CdtrSchmeId->forAll(a, b | 
+  a.Nm = b.Nm and
+  a.Id.OrgId.BIC= b.Id.OrgId.BIC and
+  a.Id.OrgId.IBEI= b.Id.OrgId.IBEI and
+  a.Id.OrgId.BEI= b.Id.OrgId.BEI and
+  a.Id.OrgId.EANGLN= b.Id.OrgId.EANGLN and
+  a.Id.OrgId.USCHU= b.Id.OrgId.USCHU and
+  a.Id.OrgId.DUNS = b.Id.OrgId.DUNS and
+  a.Id.OrgId.BkPtyId = b.Id.OrgId.BkPtyId and
+  a.Id.OrgId.TaxIdNb = b.Id.OrgId.TaxIdNb and
+  a.Id.OrgId.PrtryId.Id = b.Id.OrgId.PrtryId.Id and
+  a.Id.OrgId.PrtryId.Issr = b.Id.OrgId.PrtryId.Issr and
+  a.Id.PrvtId.DrvrsLicNb = b.Id.PrvtId.DrvrsLicNb and
+  a.Id.PrvtId.CstmrNb= b.Id.PrvtId.CstmrNb and
+  a.Id.PrvtId.SclSctyNb = b.Id.PrvtId.SclSctyNb and
+  a.Id.PrvtId.AlnRegnNb= b.Id.PrvtId.AlnRegnNb and
+  a.Id.PrvtId.PsptNb = b.Id.PrvtId.PsptNb and
+  a.Id.PrvtId.TaxIdNb = b.Id.PrvtId.TaxIdNb and
+  a.Id.PrvtId.IdntyCardNb = b.Id.PrvtId.IdntyCardNb and
+  a.Id.PrvtId.MplyrIdNb = b.Id.PrvtId.MplyrIdNb and
+  a.Id.PrvtId.OthrId.Id = b.Id.PrvtId.OthrId.Id and
+  a.Id.PrvtId.OthrId.IdTp = b.Id.PrvtId.OthrId.IdTp and
+  a.Id.PrvtId.Issr = b.Id.PrvtId.Issr and
+  a.CtryOfRes = b.CtryOfRes)]]></ocl></rule><rule name="EPC_Charge_Bearer" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="It is recommended that Charge Bearer be specified as part of Payment Information (PmtInf) and not Direct Debit Transaction Information (DrctDbTxInf). &#xD;&#xA;&#xD;&#xA;See row 10 of section 2.1.3 of Payment Information pg 9 of SEPA B2B Direct Debit C2B Implementation Guidelines document." message=""><ocl><![CDATA[ChrgBr->size() = 0]]></ocl></rule><rule name="EPC_DbtrAcctId" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="For Debtor Account (DrctDbtTxInf DbtrAcct), only IBAN is allowed. &#xD;&#xA;&#xD;&#xA;See row 14 on page 13 of SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[DbtrAcct.Id.BBAN->size() = 0 and 
+DbtrAcct.Id.PrtryAcct->size() = 0 and 
+DbtrAcct.Id.UPIC->size() = 0 and
+DbtrAcct.Tp->size() = 0 and 
+DbtrAcct.Ccy->size() = 0 and
+DbtrAcct.Nm->size() = 0]]></ocl></rule><rule name="EPC_DbtrAdrLine" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Only two occurrences of AdrLine are allowed for a debtor (DrctDbtTxInf Dbtr PstlAdr AdrLine).&#xD;&#xA;&#xD;&#xA;See row 3 on pg 13 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[Dbtr.PstlAdr.AdrLine->size() >0 implies Dbtr.PstlAdr.AdrLine->size() <= 2]]></ocl></rule><rule name="EPC_DbtrAgtFinInstnId" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="For Debtor Agent in Direct Debit Transaction Information (DrctDbtTxInf DbtrAgt FinInstnId), only BIC is allowed. &#xD;&#xA;&#xD;&#xA;Ref row 14 on pg 12 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[DbtrAgt.FinInstnId.ClrSysMmbId->size() = 0 and 
+DbtrAgt.FinInstnId.NmAndAdr->size() =0 and 
+DbtrAgt.FinInstnId.PrtryId->size() = 0 and 
+DbtrAgt.FinInstnId.CmbndId->size() = 0 and
+DbtrAgt.BrnchId->size() = 0]]></ocl></rule><rule name="EPC_DbtrNm" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Debtor Name (DrctDbtTxInf Dbdtr Nm) is mandatory. &#xD;&#xA;&#xD;&#xA;See row 17 on pg 12 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[Dbtr.Nm->size() > 0]]></ocl></rule><rule name="EPC_DrctDbtTxInfDbtrIdOrgId" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="The Direct Debit Transaction Information Debtor Identification (DrctDbtTxInf Dbtr Id OrgId) can only contain one of the subelements BIC, IBEI, BEI, EANGLN, USCHU, DUNS, BkPryId, TaxIdNb, or PrtryId.&#xD;&#xA;&#xD;&#xA;See row 11 on pg 13 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[Dbtr.Id.OrgId->size() = 1 implies 
+ (Dbtr.Id.OrgId.BIC->size() +
+  Dbtr.Id.OrgId.IBEI->size() +
+  Dbtr.Id.OrgId.BEI->size() +
+  Dbtr.Id.OrgId.EANGLN->size() +
+  Dbtr.Id.OrgId.USCHU->size() +
+  Dbtr.Id.OrgId.DUNS->size() +
+  Dbtr.Id.OrgId.BkPtyId->size() +
+  Dbtr.Id.OrgId.TaxIdNb->size() +
+  Dbtr.Id.OrgId.PrtryId->size()) <= 1]]></ocl></rule><rule name="EPC_DrctDbtTxInfDbtrIdPrvtId" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Only one occurrence of Private Identification for Direct Debit Transaction Information Debtor (DrctDbTxInf Dbtr Id PrvtId) may be present.&#xD;&#xA;&#xD;&#xA;Ref row 12 on pg 13 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[Dbtr.Id.PrvtId->size() <=1]]></ocl></rule><rule name="EPC_DrctDbtTxInfUltmDbtrIdOrgId" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="The Direct Debit Transaction Information Ultimate Debtor Identification (DrctDbtTxInf Ultmt Dbtr Id OrgId) can only contain one of the subelements BIC, IBEI, BEI, EANGLN, USCHU, DUNS, BkPryId, TaxIdNb, or PrtryId.&#xD;&#xA;&#xD;&#xA;See row 19 on pg 13 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[UltmtDbtr.Id.OrgId->size() = 1 implies 
+ (UltmtDbtr.Id.OrgId.BIC->size() +
+  UltmtDbtr.Id.OrgId.IBEI->size() +
+  UltmtDbtr.Id.OrgId.BEI->size() +
+  UltmtDbtr.Id.OrgId.EANGLN->size() +
+  UltmtDbtr.Id.OrgId.USCHU->size() +
+  UltmtDbtr.Id.OrgId.DUNS->size() +
+  UltmtDbtr.Id.OrgId.BkPtyId->size() +
+  UltmtDbtr.Id.OrgId.TaxIdNb->size() +
+  UltmtDbtr.Id.OrgId.PrtryId->size()) <= 1]]></ocl></rule><rule name="EPC_DrctDbtTxInfUltmtCdtrIdOrgId" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="The Direct Debit Transaction Information Ultimate Creditor Organisation Identification (DrctDbtTxInf UltmtCdtr Id OrgId) can only contain one of the subelements BIC, IBEI, BEI, EANGLN, USCHU, DUNS, BkPryId, TaxIdNb, or PrtryId.&#xD;&#xA;&#xD;&#xA;See row 11 on pg 12 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[UltmtCdtr.Id.OrgId->size() = 1 implies 
+ (UltmtCdtr.Id.OrgId.BIC->size() +
+  UltmtCdtr.Id.OrgId.IBEI->size() +
+  UltmtCdtr.Id.OrgId.BEI->size() +
+  UltmtCdtr.Id.OrgId.EANGLN->size() +
+  UltmtCdtr.Id.OrgId.USCHU->size() +
+  UltmtCdtr.Id.OrgId.DUNS->size() +
+  UltmtCdtr.Id.OrgId.BkPtyId->size() +
+  UltmtCdtr.Id.OrgId.TaxIdNb->size() +
+  UltmtCdtr.Id.OrgId.PrtryId->size()) <= 1]]></ocl></rule><rule name="EPC_DrctDbtTxInfUltmtCdtrIdPrvtId" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Only one occurrence of Private Identification for Direct Debit Transaction Information Ultimate Creditor (DrctDbTxInf UltmtCdtr Id PrvtId) may be present.&#xD;&#xA;&#xD;&#xA;Ref row 12 on pg 12 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[UltmtCdtr.Id.PrvtId->size() <=1]]></ocl></rule><rule name="EPC_DrctDbtTxInfUltmtDbtrIdPrvtId" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Only one occurrence of Private Identification for Direct Debit Transaction Information Ultimate Debtor (DrctDbTxInf UltmtDbtr Id PrvtId) may be present.&#xD;&#xA;&#xD;&#xA;Ref row 20 on pg 13 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[UltmtDbtr.Id.PrvtId->size() <=1]]></ocl></rule><rule name="EPC_DrctDbTxInf_MandatoryFields" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Direct Debit Transaction (DrctDbtTx), Mandate Related Information (DrctDbtTx MndtRltdInf), Mandate Identification (DrctDbtTx MndtRltdInf MndtId) and Date of Signature (DrctDbtTx MndtRltdInf DtOfSgntr) are all mandatory fields within Direct Debit Transaction Information (DrctDbtTxInf). &#xD;&#xA;&#xD;&#xA;See rows 1-4 on pg 10 of SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[DrctDbtTx->size() > 0 
+and self.DrctDbtTx.MndtRltdInf->size() > 0
+and self.DrctDbtTx.MndtRltdInf.MndtId->size() >0 
+and self.DrctDbtTx.MndtRltdInf.DtOfSgntr->size() > 0]]></ocl></rule><rule name="EPC_DrctDbTxInfChrgBr" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Charge Bearer in direct debit transaction information (DrctDbTxInf ChrgBr) can only be set to SLEV.  &#xD;&#xA;&#xD;&#xA;See last row, pg 9 of SEPA B2B Direct Debit C2B Implementation Guidelines document." message=""><ocl><![CDATA[ChrgBr = 'SLEV']]></ocl></rule><rule name="EPC_GprHdrInitgPtyIdOrgId" type="invariant" context="GroupHeader1" priority="99" isActive="true" description="The Organisation Identification (InitgPty Id OrgId) can only contain one of the subelements BIC, IBEI, BEI, EANGLN, USCHU, DUNS, BkPryId, TaxIdNb, or PrtryId.&#xD;&#xA;&#xD;&#xA;See row 1 on pg 7 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3" message=""><ocl><![CDATA[InitgPty.Id.OrgId->size() = 1 implies 
+ (InitgPty.Id.OrgId.BIC->size() +
+  InitgPty.Id.OrgId.IBEI->size() +
+  InitgPty.Id.OrgId.BEI->size() +
+  InitgPty.Id.OrgId.EANGLN->size() +
+  InitgPty.Id.OrgId.USCHU->size() +
+  InitgPty.Id.OrgId.DUNS->size() +
+  InitgPty.Id.OrgId.BkPtyId->size() +
+  InitgPty.Id.OrgId.TaxIdNb->size() +
+  InitgPty.Id.OrgId.PrtryId->size()) <= 1]]></ocl></rule><rule name="EPC_GrpHdrGrpgMIXD" type="invariant" context="GroupHeader1" priority="99" isActive="true" description="In the GroupHeader, grouping can only be set to 'MIXD'.&#xD;&#xA;&#xD;&#xA;Row 7 pg 6 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[Grpg='MIXD']]></ocl></rule><rule name="EPC_GrpHdrPrvtId" type="invariant" context="GroupHeader1" priority="99" isActive="true" description="Only one occurrence of Private Identification (InitgPty Id PrvtId) may be present.&#xD;&#xA;&#xD;&#xA;Ref row 2 on pg 7 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[InitgPty.Id.PrvtId->size() <=1]]></ocl></rule><rule name="EPC_InstdAmtEURO" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="The instructed amount currency in direct debit transaction information (DbctDbTxInf InstdAmt Ccy) must be set to EUR.&#xD;&#xA;&#xD;&#xA;See row 18 on pg 9 of SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[InstdAmt.Ccy = 'EUR']]></ocl></rule><rule name="EPC_InstrdAmtValueRange" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="false" description="The instructed amount in direct debit transaction information (DrctDbTxInf InstdAmt) must be 0.01 or more and 999999999.99 or less. &#xD;&#xA;&#xD;&#xA;See row 18 on pg 9 of SEPA B2B Direct Debit C2B Implementation Guidelines." message="The generated java code failed to compile. File is '/var/www/vhosts/nomos-software.com/webapps/nomos//upload//NomosSoftware/com/nomos/generatedcode/EPC_InstrdAmtValueRange.java' Please contact NOMOS Software Support."><ocl><![CDATA[InstdAmt >= 0.01 and InstdAmt <= 999999999.99]]></ocl></rule><rule name="EPC_LclInstrm" type="invariant" context="PaymentTypeInformation2" priority="99" isActive="true" description="The Local Instrument field (PmtInf PmtTpInf LclInstrm) is mandatory. &#xD;&#xA;&#xD;&#xA;See row 9 of section 2.1.3 on pg 7 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3" message=""><ocl><![CDATA[self.LclInstrm->size() > 0]]></ocl></rule><rule name="EPC_LclInstrmCd" type="invariant" context="LocalInstrument1Choice" priority="99" isActive="true" description="Only 'B2B' is allowed for Local Instrument Code (PmtInf PmtTpInf Cd). 'B2B' is used to indicate a B2B direct debit. &#xD;&#xA;&#xD;&#xA;See row 11 of section 2.1.3 on pg 7 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[Cd = 'B2B']]></ocl></rule><rule name="EPC_MndtRltdInf_AmdmntInd" type="invariant" context="MandateRelatedInformation1" priority="99" isActive="true" description="The Amendment Information Details in Mandate Related Information (MndtRltdInf) for Direct Debit Transactions are mandatory if 'Amendment Indicator' (AmdmntInd) is 'TRUE'. &#xD;&#xA;&#xD;&#xA;See row 6 of pg 10 of SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[self.AmdmntInd = true implies self.AmdmntInfDtls->size() > 0]]></ocl></rule><rule name="EPC_MndtRltdInf_OrgnlCdtrSchmeId_PrvtId_SEPA" type="invariant" context="DirectDebitTransaction1" priority="99" isActive="true" description="'Identification Type'  under 'Other Identification' for Mandated Related Information Amendment Information Original Creditor Scheme Private Ids (MndtRltdInf AmdmntInfDtls OrgnlCdtrSchmeId Id PrvtId) must specify 'SEPA'.&#xD;&#xA;&#xD;&#xA;See row 13 of page 10 SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[self.MndtRltdInf.AmdmntInfDtls.OrgnlCdtrSchmeId.Id.PrvtId->forAll(a | a.OthrId.IdTp='SEPA')]]></ocl></rule><rule name="EPC_MndtRltdInf_OrgnlCdtrSchmeId_PrvtIdOnlyOne" type="invariant" context="DirectDebitTransaction1" priority="99" isActive="true" description="Only one occurrence of 'Private Identification' is allowed for Mandate Related Information Amendment Information Original Creditor Schemes (DrctDbTx MndtRltdInf AmdmntInfDtl OrgnlCdtrSchmeId Id PrvtId).&#xD;&#xA;&#xD;&#xA;See row 13 of page 10 SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[self.MndtRltdInf.AmdmntInfDtls.OrgnlCdtrSchmeId.Id.PrvtId->size() <=1 ]]></ocl></rule><rule name="EPC_OrgnlDbtrAcctId" type="invariant" context="MandateRelatedInformation1" priority="99" isActive="true" description="For Original Debtor Accounts in mandate related information amendment information (MndtRltdInf AmdmntInfDtls OrgnlDbtrAcct Id), only IBAN is allowed. &#xD;&#xA;&#xD;&#xA;See row 5 of page 11 SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[AmdmntInfDtls.OrgnlDbtrAcct.Id.BBAN->size() = 0 and 
+AmdmntInfDtls.OrgnlDbtrAcct.Id.PrtryAcct->size() = 0 and 
+AmdmntInfDtls.OrgnlDbtrAcct.Id.UPIC->size() = 0 and 
+AmdmntInfDtls.OrgnlDbtrAcct.Tp->size() = 0 and
+AmdmntInfDtls.OrgnlDbtrAcct.Ccy->size() = 0 and 
+AmdmntInfDtls.OrgnlDbtrAcct.Nm->size() = 0]]></ocl></rule><rule name="EPC_PACS3Mapping_AmdmntInfDtlsOrgnlCdtrSchmeId" type="invariant" context="AmendmentInformationDetails1" priority="99" isActive="true" description="Warning: For Original Creditor Scheme Id in Mandate Related Information AmendmentInformation Details (DrctDbtTx MndtRltfInf AmdmntInfDtls OrgnlCdtrSchmeId), only Private Identification Other Identification (PrvtId OthrId) should be included in the Id, if these fields are to be mapped correctly to pacs3 Amendment Information Details. &#xD;&#xA;&#xD;&#xA;Ref row 13 on pg 10 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3, and EBA pacs3 schema." message=""><ocl><![CDATA[OrgnlCdtrSchmeId.Id.OrgId->size() = 0 and
+OrgnlCdtrSchmeId.Id.PrvtId.Issr->size() = 0 and
+OrgnlCdtrSchmeId.Id.PrvtId.DrvrsLicNb->size() = 0 and
+OrgnlCdtrSchmeId.Id.PrvtId.CstmrNb->size() = 0 and
+OrgnlCdtrSchmeId.Id.PrvtId.SclSctyNb->size() = 0 and
+OrgnlCdtrSchmeId.Id.PrvtId.AlnRegnNb->size() = 0 and
+OrgnlCdtrSchmeId.Id.PrvtId.PsptNb->size() = 0  and
+OrgnlCdtrSchmeId.Id.PrvtId.TaxIdNb->size() = 0 and
+OrgnlCdtrSchmeId.Id.PrvtId.IdntyCardNb->size() = 0  and
+OrgnlCdtrSchmeId.Id.PrvtId.MplyrIdNb->size() = 0 and 
+OrgnlCdtrSchmeId.Id.PrvtId.DtAndPlcOfBirth->size() = 0]]></ocl></rule><rule name="EPC_PACS3Mapping_AmdmntInfDtlsOrgnlDbtrAgt" type="invariant" context="AmendmentInformationDetails1" priority="99" isActive="true" description="Warning: For Original Debtor Agent in Mandate Related Information AmendmentInformation Details (DrctDbtTx MndtRltfInf AmdmntInfDtls OrgnlDbtrAgt), only Proprietary Identification (FinInstnId PrtryId) should be used if these fields are to be mapped correctly to pacs3 Amendment Information Details. &#xD;&#xA;&#xD;&#xA;Ref row 6 on pg 11 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3, and EBA pacs3 schema." message=""><ocl><![CDATA[OrgnlDbtrAgt.FinInstnId.ClrSysMmbId->size() = 0 and 
+OrgnlDbtrAgt.FinInstnId.NmAndAdr->size() =0 and 
+OrgnlDbtrAgt.FinInstnId.BIC->size() = 0 and 
+OrgnlDbtrAgt.FinInstnId.CmbndId->size() = 0 and
+OrgnlDbtrAgt.BrnchId->size() = 0]]></ocl></rule><rule name="EPC_PACS3Mapping_DrctDbtTxCdtrSchmeId" type="invariant" context="DirectDebitTransaction1" priority="99" isActive="true" description="Warning: For Creditor Scheme Id in Direct Debit Transaction (DrctDbtTx CdtrSchmeId), only Private Identification Other Identification (PrvtId OthrId) should be included in the Id, if these fields are to be mapped correctly to pacs3 Amendment Information Details. &#xD;&#xA;&#xD;&#xA;Ref row 14 on pg 11 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3, and EBA pacs3 schema." message=""><ocl><![CDATA[CdtrSchmeId.Id.OrgId->size() = 0 and
+CdtrSchmeId.Id.PrvtId.Issr->size() = 0 and
+CdtrSchmeId.Id.PrvtId.DrvrsLicNb->size() = 0 and
+CdtrSchmeId.Id.PrvtId.CstmrNb->size() = 0 and
+CdtrSchmeId.Id.PrvtId.SclSctyNb->size() = 0 and
+CdtrSchmeId.Id.PrvtId.AlnRegnNb->size() = 0 and
+CdtrSchmeId.Id.PrvtId.PsptNb->size() = 0  and
+CdtrSchmeId.Id.PrvtId.TaxIdNb->size() = 0 and
+CdtrSchmeId.Id.PrvtId.IdntyCardNb->size() = 0  and
+CdtrSchmeId.Id.PrvtId.MplyrIdNb->size() = 0 and 
+CdtrSchmeId.Id.PrvtId.DtAndPlcOfBirth->size() = 0]]></ocl></rule><rule name="EPC_PmtInfChrgBr" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="Charge Bearer (PmtInf ChrgBr) can only be set to 'SLEV'.&#xD;&#xA;&#xD;&#xA;See row 10 of section 2.1.3 of Payment Information pg 9 of SEPA B2B Direct Debit C2B Implementation Guidelines document." message=""><ocl><![CDATA[ChrgBr = 'SLEV']]></ocl></rule><rule name="EPC_PmtInfId" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="It is recommended that 'Payment Information Identification' be included (PmtInf PmtInfId).&#xD;&#xA;&#xD;&#xA;Ref row 2 Section 2.1.3 in SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3 document." message=""><ocl><![CDATA[PmtInfId->size() > 0]]></ocl></rule><rule name="EPC_PmtInfUltmtCdtrIdOrgId" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="The Payment Information Ultimate Creditor Organisation Identification (PmtInf UltmtCdtr Id OrgId) can only contain one of the subelements BIC, IBEI, BEI, EANGLN, USCHU, DUNS, BkPryId, TaxIdNb, or PrtryId.&#xD;&#xA;&#xD;&#xA;See row 7 on pg 9 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[UltmtCdtr.Id.OrgId->size() = 1 implies 
+ (UltmtCdtr.Id.OrgId.BIC->size() +
+  UltmtCdtr.Id.OrgId.IBEI->size() +
+  UltmtCdtr.Id.OrgId.BEI->size() +
+  UltmtCdtr.Id.OrgId.EANGLN->size() +
+  UltmtCdtr.Id.OrgId.USCHU->size() +
+  UltmtCdtr.Id.OrgId.DUNS->size() +
+  UltmtCdtr.Id.OrgId.BkPtyId->size() +
+  UltmtCdtr.Id.OrgId.TaxIdNb->size() +
+  UltmtCdtr.Id.OrgId.PrtryId->size()) <= 1]]></ocl></rule><rule name="EPC_PmtInfUltmtCdtrIdPrvtId" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="Only one occurrence of Private Identification for Payment Information Ultimate Creditor (PmtInf UltmtCdtr Id PrvtId) may be present.&#xD;&#xA;&#xD;&#xA;Ref row 2 on pg 7 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[UltmtCdtr .Id.PrvtId->size() <=1]]></ocl></rule><rule name="EPC_PmtTpInf" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="Payment Type Information (PmtInf PmtTpInf) is mandatory. &#xD;&#xA;&#xD;&#xA;Ref row 4 Section 2.1.3 in SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3 document." message=""><ocl><![CDATA[PmtTpInf->size() > 0]]></ocl></rule><rule name="EPC_PmtTpInfSeqTp" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="If 'Amendment Indicator' is 'TRUE', and 'Original Debtor Agent' is set to 'SMNDA', Sequence Type (PmtInf PmtTpInf SeqTp) must be set to 'FRST'." message=""><ocl><![CDATA[self.DrctDbtTxInf->forAll(a | 
+  (a.DrctDbtTx.MndtRltdInf.AmdmntInd=true and 
+  a.DrctDbtTx.MndtRltdInf.AmdmntInfDtls.OrgnlDbtrAgt.FinInstnId.PrtryId.Id = 'SMNDA') implies 
+      a.PmtTpInf.SeqTp = 'FRST')
+
+]]></ocl></rule><rule name="EPC_RmtInfStrd" type="invariant" context="RemittanceInformation1" priority="99" isActive="true" description="Only one occurrence of 'Structured' in Remittance Information is allowed.&#xD;&#xA;&#xD;&#xA;See row 7 on pg 14 of SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[Strd->size() = 1]]></ocl></rule><rule name="EPC_RmtInfStrdCdtrRefInf" type="invariant" context="StructuredRemittanceInformation6" priority="99" isActive="true" description="When structured creditor reference information is used in the remittance information (RmtInf Strd CdtrRefInf), both 'Creditor Reference Type' (CdtrRefTp) and 'Creditor Reference' (CdtrRef) must be present.&#xD;&#xA;&#xD;&#xA;See row 11 on pg 14 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3" message=""><ocl><![CDATA[CdtrRefInf->size() > 0 implies CdtrRefInf.CdtrRef->size() = 1 and CdtrRefInf.CdtrRefTp->size() = 1]]></ocl></rule><rule name="EPC_RmtInfStrdCdtrRefInfTpCd" type="invariant" context="CreditorReferenceInformation1" priority="99" isActive="true" description="For structured remittance information, the creditor reference type code in creditor reference information (RmtInf Strd CdtrRefInf CdtrRefTp Cd) must be 'SCOR'. &#xD;&#xA;&#xD;&#xA;See row 13 on pg 14 of SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[CdtrRefTp.Cd='SCOR']]></ocl></rule><rule name="EPC_RmtInfStrdUstrd" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="In Remittance Information, either Structured information can be provided or Unstructured Information can be provided, but not both.&#xD;&#xA;&#xD;&#xA;Ref row 5 on Pg 14 in SEPA C2B Implmentation Guidelines." message=""><ocl><![CDATA[(RmtInf.Strd->size() = 1 implies RmtInf.Ustrd->size() = 0) and
+(RmtInf.Ustrd->size() = 1 implies RmtInf.Strd->size() = 0)]]></ocl></rule><rule name="EPC_RmtInfUstrd" type="invariant" context="RemittanceInformation1" priority="99" isActive="true" description="Only one occurrence of 'unstructured' is allowed.&#xD;&#xA;&#xD;&#xA;See row 6 on pg 14 of SEPA B2B Direct Debit C2B Implementation Guidelines." message=""><ocl><![CDATA[self.Ustrd->size() = 1]]></ocl></rule><rule name="EPC_SvcLvl" type="invariant" context="PaymentTypeInformation2" priority="99" isActive="true" description="Service Level (PmtInf SvcLvl) is mandatory. &#xD;&#xA;&#xD;&#xA;See row 6, section 2.1.3, pg 7 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3." message=""><ocl><![CDATA[self.SvcLvl->size() > 0]]></ocl></rule><rule name="EPC_SvcLvlCd" type="invariant" context="ServiceLevel3Choice" priority="99" isActive="true" description="The value for Service Level Code (PmtInf PmtTpInf SvcLvl Cd) must be set to 'SEPA'. &#xD;&#xA;&#xD;&#xA;See row 7 of section 2.1.3 of Payment Information pg 7 of SEPA B2B Direct Debit C2B Implementation Guidelines document." message=""><ocl><![CDATA[Cd = 'SEPA']]></ocl></rule><rule name="EPC_UltimateCdtr" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="The ultimate creditor field is included in the Payment Information, it should not be included in the Direct Debit Transaction Information. See row 3 pg 9 of SEPA B2B Direct Debit C2B Implementation Guidelines. " message=""><ocl><![CDATA[self.UltmtCdtr->size() > 0 implies self.DrctDbtTxInf->forAll(a | a.UltmtCdtr->size() = 0)
+]]></ocl></rule><rule name="Grouping1Rule" type="invariant" context="pain.008.001.01" priority="99" isActive="true" description="If GroupHeader/Grouping is present and equals GRPD, then one and only one occurrence of PaymentInformation must be present.&#xD;&#xA;&#xD;&#xA;Ref. p.79 of Payments_Standards-Initiation_updated.pdf." message=""><ocl><![CDATA[(GrpHdr.Grpg.size() > 0 and GrpHdr.Grpg = 'GRPD') implies PmtInf->size() = 1]]></ocl></rule><rule name="Grouping2Rule" type="invariant" context="pain.008.001.01" priority="99" isActive="true" description="If GroupHeader/Grouping is present and equals SNGL, then each occurrence of PaymentInformation must contain one and only one occurrence of PaymentInformation/DirectDebitTransactionInformation.&#xD;&#xA;&#xD;&#xA;Ref. p.79 of Payments_Standards-Initiation_updated.pdf." message=""><ocl><![CDATA[GrpHdr.Grpg='SNGL' implies self.PmtInf->forAll(a | a.DrctDbtTxInf->size()=1)]]></ocl></rule><rule name="PaymentTypeInformationRule" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="If PaymentTypeInformation is present, then DirectDebitTransactionInformation/PaymentTypeInformation is&#xD;&#xA;not allowed.&#xD;&#xA;&#xD;&#xA;Ref. p.86 of Payments_Standards-Initiation_updated.pdf." message=""><ocl><![CDATA[PmtTpInf->size()>0 implies DrctDbtTxInf.PmtTpInf->size()=0]]></ocl></rule><rule name="UltimateCreditorGuideline" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="Guideline - UltimateCreditor in the PaymentInformation may only be present if different from Creditor. Note: Only one occurrence of PrvtId is allowed in UltmtCdtr and Cdtr.&#xD;&#xA;&#xD;&#xA;Ref p.86 of Payments_Standards-Initiated_updated.pdf." message=""><ocl><![CDATA[(UltmtCdtr.Nm->size() = 1 implies 
+                UltmtCdtr.Nm <> Cdtr.Nm) and
+
+((UltmtCdtr.Id.OrgId.BIC->size() = 1 and Cdtr.Id.OrgId.BIC->size() = 1) implies
+    UltmtCdtr.Id.OrgId.BIC <> Cdtr.Id.OrgId.BIC) and
+
+((UltmtCdtr.Id.OrgId.IBEI->size() = 1 and Cdtr.Id.OrgId.IBEI->size() = 1) implies
+    UltmtCdtr.Id.OrgId.IBEI <> Cdtr.Id.OrgId.IBEI) and
+
+((UltmtCdtr.Id.OrgId.BEI->size() = 1 and Cdtr.Id.OrgId.BEI->size() = 1) implies
+    UltmtCdtr.Id.OrgId.BEI <> Cdtr.Id.OrgId.BEI) and 
+
+((UltmtCdtr.Id.OrgId.EANGLN->size() = 1 and Cdtr.Id.OrgId.EANGLN->size() = 1) implies
+    UltmtCdtr.Id.OrgId.EANGLN <> Cdtr.Id.OrgId.EANGLN) and
+
+((UltmtCdtr.Id.OrgId.USCHU->size() = 1 and Cdtr.Id.OrgId.USCHU->size() = 1) implies
+    UltmtCdtr.Id.OrgId.USCHU <> Cdtr.Id.OrgId.USCHU) and
+
+((UltmtCdtr.Id.OrgId.DUNS->size() = 1 and Cdtr.Id.OrgId.DUNS->size() = 1) implies
+    UltmtCdtr.Id.OrgId.DUNS <> Cdtr.Id.OrgId.DUNS) and
+
+((UltmtCdtr.Id.OrgId.BkPtyId->size() = 1 and Cdtr.Id.OrgId.BkPtyId->size() = 1) implies
+    UltmtCdtr.Id.OrgId.BkPtyId <> Cdtr.Id.OrgId.BkPtyId) and
+
+((UltmtCdtr.Id.OrgId.TaxIdNb->size() = 1 and Cdtr.Id.OrgId.TaxIdNb->size() = 1) implies
+    UltmtCdtr.Id.OrgId.TaxIdNb <> Cdtr.Id.OrgId.TaxIdNb) and
+
+((UltmtCdtr.Id.OrgId.PrtryId.Id->size() = 1 and Cdtr.Id.OrgId.PrtryId.Id->size() = 1) implies
+    UltmtCdtr.Id.OrgId.PrtryId.Id <> Cdtr.Id.OrgId.PrtryId.Id) and 
+
+((UltmtCdtr.Id.PrvtId.DrvrsLicNb->size() = 1 and Cdtr.Id.PrvtId.DrvrsLicNb->size() = 1) implies
+    UltmtCdtr.Id.PrvtId.DrvrsLicNb <> Cdtr.Id.PrvtId.DrvrsLicNb) and
+
+((UltmtCdtr.Id.PrvtId.CstmrNb->size() = 1 and Cdtr.Id.PrvtId.CstmrNb->size() = 1) implies
+    UltmtCdtr.Id.PrvtId.CstmrNb <> Cdtr.Id.PrvtId.CstmrNb) and
+
+((UltmtCdtr.Id.PrvtId.SclSctyNb->size() = 1 and Cdtr.Id.PrvtId.SclSctyNb->size() = 1) implies
+    UltmtCdtr.Id.PrvtId.SclSctyNb <> Cdtr.Id.PrvtId.SclSctyNb) and
+
+((UltmtCdtr.Id.PrvtId.AlnRegnNb->size() = 1 and Cdtr.Id.PrvtId.AlnRegnNb->size() = 1) implies
+    UltmtCdtr.Id.PrvtId.AlnRegnNb <> Cdtr.Id.PrvtId.AlnRegnNb) and 
+
+((UltmtCdtr.Id.PrvtId.PsptNb->size() = 1 and Cdtr.Id.PrvtId.PsptNb->size() = 1) implies
+    UltmtCdtr.Id.PrvtId.PsptNb <> Cdtr.Id.PrvtId.PsptNb) and 
+
+((UltmtCdtr.Id.PrvtId.TaxIdNb->size() = 1 and Cdtr.Id.PrvtId.TaxIdNb->size() = 1) implies
+    UltmtCdtr.Id.PrvtId.TaxIdNb <> Cdtr.Id.PrvtId.TaxIdNb) and
+
+((UltmtCdtr.Id.PrvtId.IdntyCardNb->size() = 1 and Cdtr.Id.PrvtId.IdntyCardNb->size() = 1) implies
+    UltmtCdtr.Id.PrvtId.IdntyCardNb <> Cdtr.Id.PrvtId.IdntyCardNb) and
+
+((UltmtCdtr.Id.PrvtId.MplyrIdNb->size() = 1 and Cdtr.Id.PrvtId.MplyrIdNb->size() = 1) implies
+    UltmtCdtr.Id.PrvtId.MplyrIdNb <> Cdtr.Id.PrvtId.MplyrIdNb) and 
+
+((UltmtCdtr.Id.PrvtId.OthrId->size() = 1 and Cdtr.Id.PrvtId.OthrId->size() = 1) implies
+    (UltmtCdtr.Id.PrvtId.OthrId.Id <> Cdtr.Id.PrvtId.OthrId.Id or
+    UltmtCdtr.Id.PrvtId.OthrId.IdTp <> Cdtr.Id.PrvtId.OthrId.IdTp))]]></ocl></rule><rule name="UltimateCreditorInDrctDbtTxInfGuideline" type="invariant" context="PaymentInstructionInformation2" priority="99" isActive="true" description="Guideline - UltimateCreditor in the Direct Debit Information may only be present if different from Creditor. Note: Only one occurrence of PrvtId is allowed in UltmtCdtr and Cdtr.&#xD;&#xA;&#xD;&#xA;Ref p.94 of Payments_Standards-Initiated_updated.pdf." message=""><ocl><![CDATA[DrctDbtTxInf->forAll(a | 
+
+(a.UltmtCdtr.Nm->size() = 1 implies 
+                a.UltmtCdtr.Nm <> Cdtr.Nm) and
+
+((a.UltmtCdtr.Id.OrgId.BIC->size() = 1 and Cdtr.Id.OrgId.BIC->size() = 1) implies
+    a.UltmtCdtr.Id.OrgId.BIC <> Cdtr.Id.OrgId.BIC) and
+
+((a.UltmtCdtr.Id.OrgId.IBEI->size() = 1 and Cdtr.Id.OrgId.IBEI->size() = 1) implies
+    a.UltmtCdtr.Id.OrgId.IBEI <> Cdtr.Id.OrgId.IBEI) and
+
+((a.UltmtCdtr.Id.OrgId.BEI->size() = 1 and Cdtr.Id.OrgId.BEI->size() = 1) implies
+    a.UltmtCdtr.Id.OrgId.BEI <> Cdtr.Id.OrgId.BEI) and 
+
+((a.UltmtCdtr.Id.OrgId.EANGLN->size() = 1 and Cdtr.Id.OrgId.EANGLN->size() = 1) implies
+    a.UltmtCdtr.Id.OrgId.EANGLN <> Cdtr.Id.OrgId.EANGLN) and
+
+((a.UltmtCdtr.Id.OrgId.USCHU->size() = 1 and Cdtr.Id.OrgId.USCHU->size() = 1) implies
+    a.UltmtCdtr.Id.OrgId.USCHU <> Cdtr.Id.OrgId.USCHU) and
+
+((a.UltmtCdtr.Id.OrgId.DUNS->size() = 1 and Cdtr.Id.OrgId.DUNS->size() = 1) implies
+    a.UltmtCdtr.Id.OrgId.DUNS <> Cdtr.Id.OrgId.DUNS) and
+
+((a.UltmtCdtr.Id.OrgId.BkPtyId->size() = 1 and Cdtr.Id.OrgId.BkPtyId->size() = 1) implies
+    a.UltmtCdtr.Id.OrgId.BkPtyId <> Cdtr.Id.OrgId.BkPtyId) and
+
+((a.UltmtCdtr.Id.OrgId.TaxIdNb->size() = 1 and Cdtr.Id.OrgId.TaxIdNb->size() = 1) implies
+    a.UltmtCdtr.Id.OrgId.TaxIdNb <> Cdtr.Id.OrgId.TaxIdNb) and
+
+((a.UltmtCdtr.Id.OrgId.PrtryId.Id->size() = 1 and Cdtr.Id.OrgId.PrtryId.Id->size() = 1) implies
+    a.UltmtCdtr.Id.OrgId.PrtryId.Id <> Cdtr.Id.OrgId.PrtryId.Id) and 
+
+((a.UltmtCdtr.Id.PrvtId.DrvrsLicNb->size() = 1 and Cdtr.Id.PrvtId.DrvrsLicNb->size() = 1) implies
+    a.UltmtCdtr.Id.PrvtId.DrvrsLicNb <> Cdtr.Id.PrvtId.DrvrsLicNb) and
+
+((a.UltmtCdtr.Id.PrvtId.CstmrNb->size() = 1 and Cdtr.Id.PrvtId.CstmrNb->size() = 1) implies
+    a.UltmtCdtr.Id.PrvtId.CstmrNb <> Cdtr.Id.PrvtId.CstmrNb) and
+
+((a.UltmtCdtr.Id.PrvtId.SclSctyNb->size() = 1 and Cdtr.Id.PrvtId.SclSctyNb->size() = 1) implies
+    a.UltmtCdtr.Id.PrvtId.SclSctyNb <> Cdtr.Id.PrvtId.SclSctyNb) and
+
+((a.UltmtCdtr.Id.PrvtId.AlnRegnNb->size() = 1 and Cdtr.Id.PrvtId.AlnRegnNb->size() = 1) implies
+    a.UltmtCdtr.Id.PrvtId.AlnRegnNb <> Cdtr.Id.PrvtId.AlnRegnNb) and 
+
+((a.UltmtCdtr.Id.PrvtId.PsptNb->size() = 1 and Cdtr.Id.PrvtId.PsptNb->size() = 1) implies
+    a.UltmtCdtr.Id.PrvtId.PsptNb <> Cdtr.Id.PrvtId.PsptNb) and 
+
+((a.UltmtCdtr.Id.PrvtId.TaxIdNb->size() = 1 and Cdtr.Id.PrvtId.TaxIdNb->size() = 1) implies
+    a.UltmtCdtr.Id.PrvtId.TaxIdNb <> Cdtr.Id.PrvtId.TaxIdNb) and
+
+((a.UltmtCdtr.Id.PrvtId.IdntyCardNb->size() = 1 and Cdtr.Id.PrvtId.IdntyCardNb->size() = 1) implies
+    a.UltmtCdtr.Id.PrvtId.IdntyCardNb <> Cdtr.Id.PrvtId.IdntyCardNb) and
+
+((a.UltmtCdtr.Id.PrvtId.MplyrIdNb->size() = 1 and Cdtr.Id.PrvtId.MplyrIdNb->size() = 1) implies
+    a.UltmtCdtr.Id.PrvtId.MplyrIdNb <> Cdtr.Id.PrvtId.MplyrIdNb) and 
+
+((a.UltmtCdtr.Id.PrvtId.OthrId->size() = 1 and Cdtr.Id.PrvtId.OthrId->size() = 1) implies
+    (a.UltmtCdtr.Id.PrvtId.OthrId.Id <> Cdtr.Id.PrvtId.OthrId.Id or
+    a.UltmtCdtr.Id.PrvtId.OthrId.IdTp <> Cdtr.Id.PrvtId.OthrId.IdTp))
+)]]></ocl></rule><rule name="UltimateDebtorGuideline" type="invariant" context="DirectDebitTransactionInformation1" priority="99" isActive="true" description="Guideline: UltimateDebtor may only be present if different from Debtor. Note: Only one occurrence of PrvtId is allowed in UltmtDbtr and Dbtr.&#xD;&#xA;&#xD;&#xA;Ref p.94 of Payments_Standards-Initiated_updated.pdf." message=""><ocl><![CDATA[(UltmtDbtr.Nm->size() = 1 implies 
+                UltmtDbtr.Nm <> Dbtr.Nm) and
+
+((UltmtDbtr.Id.OrgId.BIC->size() = 1 and Dbtr.Id.OrgId.BIC->size() = 1) implies
+    UltmtDbtr.Id.OrgId.BIC <> Dbtr.Id.OrgId.BIC) and
+
+((UltmtDbtr.Id.OrgId.IBEI->size() = 1 and Dbtr.Id.OrgId.IBEI->size() = 1) implies
+    UltmtDbtr.Id.OrgId.IBEI <> Dbtr.Id.OrgId.IBEI) and
+
+((UltmtDbtr.Id.OrgId.BEI->size() = 1 and Dbtr.Id.OrgId.BEI->size() = 1) implies
+    UltmtDbtr.Id.OrgId.BEI <> Dbtr.Id.OrgId.BEI) and 
+
+((UltmtDbtr.Id.OrgId.EANGLN->size() = 1 and Dbtr.Id.OrgId.EANGLN->size() = 1) implies
+    UltmtDbtr.Id.OrgId.EANGLN <> Dbtr.Id.OrgId.EANGLN) and
+
+((UltmtDbtr.Id.OrgId.USCHU->size() = 1 and Dbtr.Id.OrgId.USCHU->size() = 1) implies
+    UltmtDbtr.Id.OrgId.USCHU <> Dbtr.Id.OrgId.USCHU) and
+
+((UltmtDbtr.Id.OrgId.DUNS->size() = 1 and Dbtr.Id.OrgId.DUNS->size() = 1) implies
+    UltmtDbtr.Id.OrgId.DUNS <> Dbtr.Id.OrgId.DUNS) and
+
+((UltmtDbtr.Id.OrgId.BkPtyId->size() = 1 and Dbtr.Id.OrgId.BkPtyId->size() = 1) implies
+    UltmtDbtr.Id.OrgId.BkPtyId <> Dbtr.Id.OrgId.BkPtyId) and
+
+((UltmtDbtr.Id.OrgId.TaxIdNb->size() = 1 and Dbtr.Id.OrgId.TaxIdNb->size() = 1) implies
+    UltmtDbtr.Id.OrgId.TaxIdNb <> Dbtr.Id.OrgId.TaxIdNb) and
+
+((UltmtDbtr.Id.OrgId.PrtryId.Id->size() = 1 and Dbtr.Id.OrgId.PrtryId.Id->size() = 1) implies
+    UltmtDbtr.Id.OrgId.PrtryId.Id <> Dbtr.Id.OrgId.PrtryId.Id) and 
+
+((UltmtDbtr.Id.PrvtId.DrvrsLicNb->size() = 1 and Dbtr.Id.PrvtId.DrvrsLicNb->size() = 1) implies
+    UltmtDbtr.Id.PrvtId.DrvrsLicNb <> Dbtr.Id.PrvtId.DrvrsLicNb) and
+
+((UltmtDbtr.Id.PrvtId.CstmrNb->size() = 1 and Dbtr.Id.PrvtId.CstmrNb->size() = 1) implies
+    UltmtDbtr.Id.PrvtId.CstmrNb <> Dbtr.Id.PrvtId.CstmrNb) and
+
+((UltmtDbtr.Id.PrvtId.SclSctyNb->size() = 1 and Dbtr.Id.PrvtId.SclSctyNb->size() = 1) implies
+    UltmtDbtr.Id.PrvtId.SclSctyNb <> Dbtr.Id.PrvtId.SclSctyNb) and
+
+((UltmtDbtr.Id.PrvtId.AlnRegnNb->size() = 1 and Dbtr.Id.PrvtId.AlnRegnNb->size() = 1) implies
+    UltmtDbtr.Id.PrvtId.AlnRegnNb <> Dbtr.Id.PrvtId.AlnRegnNb) and 
+
+((UltmtDbtr.Id.PrvtId.PsptNb->size() = 1 and Dbtr.Id.PrvtId.PsptNb->size() = 1) implies
+    UltmtDbtr.Id.PrvtId.PsptNb <> Dbtr.Id.PrvtId.PsptNb) and 
+
+((UltmtDbtr.Id.PrvtId.TaxIdNb->size() = 1 and Dbtr.Id.PrvtId.TaxIdNb->size() = 1) implies
+    UltmtDbtr.Id.PrvtId.TaxIdNb <> Dbtr.Id.PrvtId.TaxIdNb) and
+
+((UltmtDbtr.Id.PrvtId.IdntyCardNb->size() = 1 and Dbtr.Id.PrvtId.IdntyCardNb->size() = 1) implies
+    UltmtDbtr.Id.PrvtId.IdntyCardNb <> Dbtr.Id.PrvtId.IdntyCardNb) and
+
+((UltmtDbtr.Id.PrvtId.MplyrIdNb->size() = 1 and Dbtr.Id.PrvtId.MplyrIdNb->size() = 1) implies
+    UltmtDbtr.Id.PrvtId.MplyrIdNb <> Dbtr.Id.PrvtId.MplyrIdNb) and 
+
+((UltmtDbtr.Id.PrvtId.OthrId->size() = 1 and Dbtr.Id.PrvtId.OthrId->size() = 1) implies
+    (UltmtDbtr.Id.PrvtId.OthrId.Id <> Dbtr.Id.PrvtId.OthrId.Id or
+    UltmtDbtr.Id.PrvtId.OthrId.IdTp <> Dbtr.Id.PrvtId.OthrId.IdTp))]]></ocl></rule></rules>
+</ruleset>

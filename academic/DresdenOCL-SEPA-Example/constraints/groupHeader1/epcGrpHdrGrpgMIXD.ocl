@@ -1,0 +1,11 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* In the GroupHeader, grouping can only be set to 'MIXD'.
+   Row 7 pg 6 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3. */
+
+context GroupHeader1
+inv EPC_GrpHdrGrpgMIXD:
+grpg='MIXD'
+
+endpackage

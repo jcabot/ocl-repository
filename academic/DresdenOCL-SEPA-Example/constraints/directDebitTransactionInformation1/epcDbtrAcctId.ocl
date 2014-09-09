@@ -1,0 +1,16 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* For Debtor Account (drctDbtTxInf DbtrAcct), only IBAN is allowed. 
+   See row 14 on page 13 of SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context DirectDebitTransactionInformation1
+inv EPC_DbtrAcctId:
+dbtrAcct.id.bBAN->size() = 0 and 
+dbtrAcct.id.prtryAcct->size() = 0 and 
+dbtrAcct.id.uPIC->size() = 0 and
+dbtrAcct.tp->size() = 0 and 
+dbtrAcct.ccy->size() = 0 and
+dbtrAcct.nm->size() = 0
+
+endpackage

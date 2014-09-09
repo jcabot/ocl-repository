@@ -1,0 +1,22 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* If ChargesAccountAgent is present, it must contain a branch of the CreditorAgent. It must 
+   not contain a completely different financial institution. 
+   Ref. p.86 of Payments_Standards-Initiation_updated.pdf. */
+   
+context PaymentInstructionInformation2
+inv ChargesAccountAgentRule:
+chrgsAcctAgt->size() = 1 implies cdtrAgt.brnchId->size() = 1 
+and
+chrgsAcctAgt.finInstnId.clrSysMmbId = cdtrAgt.finInstnId.clrSysMmbId 
+and
+chrgsAcctAgt.finInstnId.cmbndId = cdtrAgt.finInstnId.cmbndId 
+and
+chrgsAcctAgt.finInstnId.nmAndAdr = cdtrAgt.finInstnId.nmAndAdr 
+and
+chrgsAcctAgt.finInstnId.prtryId = cdtrAgt.finInstnId.prtryId 
+and
+chrgsAcctAgt.finInstnId.bIC = cdtrAgt.finInstnId.bIC
+
+endpackage

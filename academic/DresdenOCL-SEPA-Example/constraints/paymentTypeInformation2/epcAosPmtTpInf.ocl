@@ -1,0 +1,15 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Warning: The elements InstrPrty, SvcLvl Prtry, ClrChanl and LclInstrm Prtry in PmtTpInf are AOS only.
+   Instructed banks that are not in the AOS community may reject messages containing these elements.
+   Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context PaymentTypeInformation2
+inv EPC_AOS_PmtTpInf:
+instrPrty->size() = 0 and
+svcLvl.prtry->size() = 0 and 
+clrChanl->size() = 0 and 
+lclInstrm.prtry->size() = 0
+
+endpackage

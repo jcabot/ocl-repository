@@ -1,0 +1,12 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* The instructed amount currency in direct debit transaction information (DbctDbTxInf InstdAmt Ccy) must be 
+   set to EUR.
+   See row 18 on pg 9 of SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context DirectDebitTransactionInformation1
+inv EPC_InstdAmtEURO:
+instdAmt.ccy = 'EUR'
+
+endpackage

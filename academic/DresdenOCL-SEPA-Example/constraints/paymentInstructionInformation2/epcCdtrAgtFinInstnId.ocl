@@ -1,0 +1,15 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* For CreditorAgent (PmtInf cdtrAgt FinInstnId), only BIC is allowed.
+   See row 1 page 9 of SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context PaymentInstructionInformation2
+inv EPC_cdtrAgtFinInstnId:
+cdtrAgt.finInstnId.clrSysMmbId->size() = 0
+and cdtrAgt.finInstnId.nmAndAdr->size() =0
+and cdtrAgt.finInstnId.prtryId->size() = 0
+and cdtrAgt.finInstnId.cmbndId->size() =0
+and cdtrAgt.brnchId->size() = 0
+
+endpackage

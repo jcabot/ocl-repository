@@ -1,0 +1,12 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Warning: The element Prtry in DrctDbtTxInf Purpose is AOS only. Instructed banks that are not in the
+   AOS community may reject messages containing these elements.
+   Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context DirectDebitTransactionInformation1
+inv EPC_AOS_DrctDbtTxInfPurpPrtry:
+purp.prtry->size() = 0
+
+endpackage

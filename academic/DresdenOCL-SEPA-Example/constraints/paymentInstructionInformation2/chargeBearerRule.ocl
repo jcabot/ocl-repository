@@ -1,0 +1,16 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* If ChargeBearer is present, then DirectDebitTransactionInformation/ChargeBearer is not 
+   allowed. If DirectDebitTransactionInformation/ChargeBearer is present, then ChargeBearer 
+   is not allowed. DirectDebitTransactionInformation/ChargeBearer and ChargeBearer may both
+   be absent. 
+   Ref. p.86 of Payment-standards Initiation updated.pdf */	
+
+context PaymentInstructionInformation2
+inv ChargeBearerRule:
+(chrgBr->size() > 0 implies drctDbtTxInf->forAll(chrgBr.oclIsUndefined()))
+and
+(not drctDbtTxInf->forAll(chrgBr.oclIsUndefined()) implies chrgBr->size() = 0)
+
+endpackage

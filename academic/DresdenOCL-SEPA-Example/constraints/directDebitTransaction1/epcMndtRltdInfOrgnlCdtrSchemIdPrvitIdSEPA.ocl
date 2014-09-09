@@ -1,0 +1,16 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Only one occurrence of 'Private Identification' is allowed for Mandate Related Information Amendment
+   Information Original Creditor Schemes (DrctDbTx mndtRltdInf AmdmntInfDtl orgnlCdtrSchmeId Id prvtId).
+   See row 13 of page 10 SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context DirectDebitTransaction1
+inv EPC_mndtRltdInf_orgnlCdtrSchmeId_prvtIdOnlyOne:
+self.mndtRltdInf.oclIsUndefined()
+or
+self.mndtRltdInf.amdmntInfDtls.oclIsUndefined()
+or
+self.mndtRltdInf.amdmntInfDtls.orgnlCdtrSchmeId.id.prvtId->size() <=1
+
+endpackage

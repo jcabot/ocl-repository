@@ -1,0 +1,12 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* The Amendment Information Details in Mandate Related Information (mndtRltdInf) for Direct Debit Transactions
+   are mandatory if 'Amendment Indicator' (AmdmntInd) is 'TRUE'. 
+   See row 6 of pg 10 of SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context MandateRelatedInformation1
+inv EPC_mndtRltdInf_AmdmntInd:
+self.amdmntInd = true implies self.amdmntInfDtls->size() > 0
+
+endpackage

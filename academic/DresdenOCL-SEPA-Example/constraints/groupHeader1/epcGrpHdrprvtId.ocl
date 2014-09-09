@@ -1,0 +1,13 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Only one occurrence of Private Identification (initgPty Id prvtId) may be present.
+   Ref row 2 on pg 7 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3. */
+
+context GroupHeader1
+inv EPC_GrpHdrprvtId:
+initgPty.id.oclIsUndefined() 
+or
+initgPty.id.prvtId->size() <=1
+
+endpackage

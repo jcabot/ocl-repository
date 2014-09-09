@@ -1,0 +1,14 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* 'Identification Type'  under 'Other Identification' for Credit Scheme Identification Private Ids 
+   (cdtrSchmeId Id prvtId othrId IdTp) must specify 'SEPA'.
+   See row 3 of page 12 SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context DirectDebitTransaction1
+inv EPC_cdtrSchmeId_prvtId_SEPA:
+cdtrSchmeId.oclIsUndefined()
+or
+cdtrSchmeId.id.prvtId->forAll(a | a.othrId.idTp='SEPA')
+
+endpackage

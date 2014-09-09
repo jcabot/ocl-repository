@@ -1,0 +1,16 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Warning: The elements PstlAdr and CtryOfRes in DrctDbtTxInf UltmtDbtr are AOS only. Instructed banks
+   that are not in the AOS community may reject messages containing these elements.
+   Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context DirectDebitTransactionInformation1
+inv EPC_AOS_DrctDbtTxInfUltmtDbtr:
+ultmtDbtr.oclIsUndefined()
+or
+(ultmtDbtr.pstlAdr->size() = 0
+and
+ultmtDbtr.ctryOfRes->size() = 0)
+
+endpackage

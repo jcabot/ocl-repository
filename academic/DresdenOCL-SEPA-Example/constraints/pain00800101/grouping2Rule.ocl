@@ -1,0 +1,12 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* If GroupHeader/Grouping is present and equals SNGL, then each occurrence of PaymentInformation must contain 
+   one and only one occurrence of PaymentInformation/DirectDebitTransactionInformation.
+   Ref. p.79 of Payments_Standards-Initiation_updated.pdf.*/
+
+context Pain00800101
+inv Grouping2Rule:
+grpHdr.grpg='SNGL' implies self.pmtInf->forAll(a | a.drctDbtTxInf->size()=1)
+
+endpackage

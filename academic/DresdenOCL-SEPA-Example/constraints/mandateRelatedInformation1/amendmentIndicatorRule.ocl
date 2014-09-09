@@ -1,0 +1,15 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* If AmendmentIndicator is true, then AmendmentInformationDetails must be present, 
+   with amended mandate information. If AmendmentIndicator is false, then 
+   AmendmentInformationDetails is not allowed. 
+   Ref. p.99 of Payments_Standards-Initiation_updated.pdf. */
+
+context MandateRelatedInformation1
+inv AmendmentIndicatorRule:
+(amdmntInd = true implies amdmntInfDtls->size() > 0) 
+and
+(amdmntInd = false implies amdmntInfDtls->size() = 0)
+
+endpackage

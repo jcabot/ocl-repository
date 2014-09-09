@@ -1,0 +1,11 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* The Local Instrument field (PmtInf PmtTpInf LclInstrm) is mandatory. 
+   See row 9 of section 2.1.3 on pg 7 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3 */
+
+context PaymentTypeInformation2
+inv EPC_LclInstrm:
+self.lclInstrm->size() > 0
+
+endpackage

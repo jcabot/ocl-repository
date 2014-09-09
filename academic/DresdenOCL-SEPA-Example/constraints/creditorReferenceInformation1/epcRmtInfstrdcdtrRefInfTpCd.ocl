@@ -1,0 +1,12 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* For structured remittance information, the creditor reference type code in creditor reference information 
+   (RmtInf strd cdtrRefInf cdtrRefTp Cd) must be 'SCOR'. 
+   See row 13 on pg 14 of SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context CreditorReferenceInformation1
+inv EPC_RmtInfstrdcdtrRefInfTpCd:
+cdtrRefTp.cd='SCOR'
+
+endpackage

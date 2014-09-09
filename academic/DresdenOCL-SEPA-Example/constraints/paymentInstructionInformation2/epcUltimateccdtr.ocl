@@ -1,0 +1,12 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* The ultimate creditor field is included in the Payment Information, it should not be included 
+   in the Direct Debit Transaction Information. 
+   See row 3 pg 9 of SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context PaymentInstructionInformation2
+inv EPC_Ultimatecdtr:
+self.ultmtCdtr->size() > 0 implies self.drctDbtTxInf->forAll(a | a.ultmtCdtr->size() = 0)
+
+endpackage

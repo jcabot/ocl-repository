@@ -1,0 +1,11 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Only two occurrences of AdrLine are allowed for a Creditor (PmtInf Cdtr pstlAdr AdrLine).
+   See row 8 on page 8 of SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context PaymentInstructionInformation2
+inv EPC_CdtrAdrLine:
+cdtr.pstlAdr.adrLine->size() >0 implies cdtr.pstlAdr.adrLine->size() <= 2
+
+endpackage

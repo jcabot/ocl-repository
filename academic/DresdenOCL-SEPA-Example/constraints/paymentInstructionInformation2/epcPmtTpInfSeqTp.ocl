@@ -1,0 +1,14 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* If 'Amendment Indicator' is 'TRUE', and 'Original Debtor Agent' is set to 'SMNDA', Sequence Type 
+   (PmtInf pmtTpInf SeqTp) must be set to 'FRST'. */
+
+context PaymentInstructionInformation2
+inv EPC_pmtTpInfSeqTp:
+self.drctDbtTxInf->forAll(a | 
+  (a.drctDbtTx.mndtRltdInf.amdmntInd=true and 
+  a.drctDbtTx.mndtRltdInf.amdmntInfDtls.orgnlDbtrAgt.finInstnId.prtryId.id = 'SMNDA') implies 
+      a.pmtTpInf.seqTp = 'FRST')
+
+endpackage

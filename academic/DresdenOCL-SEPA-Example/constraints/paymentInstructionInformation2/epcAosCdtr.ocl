@@ -1,0 +1,27 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Warning: The elements PstlAdr AdrTp, PstlAdr StrtNm, PstlAdr BldgNb, PstlAdr PstCd, PstlAdr 
+   TwnNm, PstlAdr CtrySubDvsn, Id and CtryOfRes in PmtInf Cdtr are AOS only. Instructed banks 
+   that are not in the AOS community may reject messages containing these elements.
+   Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context PaymentInstructionInformation2
+inv EPC_AOS_Cdtr:
+cdtr.pstlAdr.adrTp->size() = 0 
+and 
+cdtr.pstlAdr.strtNm->size() = 0 
+and 
+cdtr.pstlAdr.bldgNb->size() = 0 
+and 
+cdtr.pstlAdr.pstCd->size() = 0 
+and 
+cdtr.pstlAdr.twnNm->size() = 0 
+and 
+cdtr.pstlAdr.ctrySubDvsn->size() = 0 
+and 
+cdtr.id->size() = 0 
+and 
+cdtr.ctryOfRes->size() = 0
+
+endpackage
