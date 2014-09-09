@@ -1,0 +1,14 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Only one occurrence of Private Identification for Direct Debit Transaction Information Ultimate Debtor 
+   (DrctDbTxInf ultmtDbtr Id prvtId) may be present.
+   Ref row 20 on pg 13 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3. */
+
+context DirectDebitTransactionInformation1
+inv EPC_drctDbtTxInfultmtDbtrIdprvtId:
+ultmtDbtr.oclIsUndefined()
+or
+ultmtDbtr.id.prvtId->size() <=1
+
+endpackage

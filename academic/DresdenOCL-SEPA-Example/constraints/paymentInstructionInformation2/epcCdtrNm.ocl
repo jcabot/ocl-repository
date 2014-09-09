@@ -1,0 +1,11 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Creditor Name (PmtInf cdtr Nm) is mandatory. 
+   See row 5 on pg 8 of SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context PaymentInstructionInformation2
+inv EPC_cdtrNm:
+cdtr.nm->size() > 0
+
+endpackage

@@ -1,0 +1,11 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Charge Bearer in direct debit transaction information (DrctDbTxInf chrgBr) can only be set to SLEV.  
+   See last row, pg 9 of SEPA B2B Direct Debit C2B Implementation Guidelines document. */
+
+context DirectDebitTransactionInformation1
+inv EPC_DrctDbTxInfchrgBr:
+chrgBr = 'SLEV'
+
+endpackage

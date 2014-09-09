@@ -1,0 +1,25 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Warning: For Creditor Scheme Id in Direct Debit Transaction (drctDbtTx cdtrSchmeId), only Private Identification 
+   Other Identification (prvtId othrId) should be included in the Id, if these fields are to be mapped correctly to 
+   pacs3 Amendment Information Details.
+   Ref row 14 on pg 11 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3, and EBA pacs3 schema. */
+
+context DirectDebitTransaction1
+inv EPC_PACS3Mapping_drctDbtTxcdtrSchmeId:
+cdtrSchmeId.oclIsUndefined()
+or
+(cdtrSchmeId.id.orgId->size() = 0 and
+cdtrSchmeId.id.prvtId.issr->size() = 0 and
+cdtrSchmeId.id.prvtId.drvrsLicNb->size() = 0 and
+cdtrSchmeId.id.prvtId.cstmrNb->size() = 0 and
+cdtrSchmeId.id.prvtId.sclSctyNb->size() = 0 and
+cdtrSchmeId.id.prvtId.alnRegnNb->size() = 0 and
+cdtrSchmeId.id.prvtId.psptNb->size() = 0  and
+cdtrSchmeId.id.prvtId.taxIdNb->size() = 0 and
+cdtrSchmeId.id.prvtId.idntyCardNb->size() = 0  and
+cdtrSchmeId.id.prvtId.mplyrIdNb->size() = 0 and 
+cdtrSchmeId.id.prvtId.dtAndPlcOfBirth->size() = 0)
+
+endpackage

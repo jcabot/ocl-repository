@@ -1,0 +1,19 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* For Original Debtor Accounts in mandate related information amendment information (mndtRltdInf amdmntInfDtls
+   OrgnldbtrAcct Id), only IBAN is allowed. 
+   See row 5 of page 11 SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context MandateRelatedInformation1
+inv EPC_orgnlDbtrAcctId:
+amdmntInfDtls.oclIsUndefined()
+or
+(amdmntInfDtls.orgnlDbtrAcct.id.bBAN->size() = 0 and 
+amdmntInfDtls.orgnlDbtrAcct.id.prtryAcct->size() = 0 and 
+amdmntInfDtls.orgnlDbtrAcct.id.uPIC->size() = 0 and 
+amdmntInfDtls.orgnlDbtrAcct.tp->size() = 0 and
+amdmntInfDtls.orgnlDbtrAcct.ccy->size() = 0 and 
+amdmntInfDtls.orgnlDbtrAcct.nm->size() = 0)
+
+endpackage

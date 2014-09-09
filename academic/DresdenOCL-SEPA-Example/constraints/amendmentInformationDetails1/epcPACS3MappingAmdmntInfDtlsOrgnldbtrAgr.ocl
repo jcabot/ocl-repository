@@ -1,0 +1,17 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Warning: For Original Debtor Agent in Mandate Related Information AmendmentInformation Details (drctDbtTx
+   MndtRltfInf amdmntInfDtls OrgnldbtrAgt), only Proprietary Identification (finInstnId prtryId) should be used
+   if these fields are to be mapped correctly to pacs3 Amendment Information Details.
+   Ref row 6 on pg 11 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3, and EBA pacs3 schema. */
+
+context AmendmentInformationDetails1
+inv EPC_PACS3Mapping_amdmntInfDtlsOrgnldbtrAgt:
+orgnlDbtrAgt.finInstnId.clrSysMmbId->size() = 0 and 
+orgnlDbtrAgt.finInstnId.nmAndAdr->size() =0 and 
+orgnlDbtrAgt.finInstnId.bIC->size() = 0 and 
+orgnlDbtrAgt.finInstnId.cmbndId->size() = 0 and
+orgnlDbtrAgt.brnchId->size() = 0
+
+endpackage

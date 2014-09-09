@@ -1,0 +1,13 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Only one occurrence of 'Private Identification' is allowed for Creditor Schemes (cdtrSchmeId Id prvtId).
+   See row 3 of page 12 SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context DirectDebitTransaction1
+inv EPC_cdtrSchmeId_prvtIdOnlyOne:
+cdtrSchmeId.oclIsUndefined()
+or
+cdtrSchmeId.id.prvtId->size() <=1
+
+endpackage

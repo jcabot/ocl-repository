@@ -1,0 +1,21 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* The Organisation Identification (InitgPty Id orgId) can only contain one of the subelements BIC, IBEI, 
+   BEI, EANGLN, USCHU, DUNS, BkPryId, TaxIdNb, or prtryId. 
+   See row 1 on pg 7 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3 */
+context GroupHeader1
+inv EPC_GprHdrInitgPtyIdorgId:
+
+initgPty.id.orgId->size() = 1 implies 
+ (initgPty.id.orgId.bIC->size() +
+  initgPty.id.orgId.iBEI->size() +
+  initgPty.id.orgId.bEI->size() +
+  initgPty.id.orgId.eANGLN->size() +
+  initgPty.id.orgId.uSCHU->size() +
+  initgPty.id.orgId.dUNS->size() +
+  initgPty.id.orgId.bkPtyId->size() +
+  initgPty.id.orgId.taxIdNb->size() +
+  initgPty.id.orgId.prtryId->size()) <= 1
+
+endpackage

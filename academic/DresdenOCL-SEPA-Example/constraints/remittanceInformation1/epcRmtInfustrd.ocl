@@ -1,0 +1,11 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Only one occurrence of 'unstructured' is allowed.
+   See row 6 on pg 14 of SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context RemittanceInformation1
+inv EPC_rmtInfustrd:
+self.ustrd->size() = 1
+
+endpackage

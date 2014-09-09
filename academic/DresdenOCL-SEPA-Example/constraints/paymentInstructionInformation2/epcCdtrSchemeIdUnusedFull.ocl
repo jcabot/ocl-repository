@@ -1,0 +1,42 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* It is recommended that all transactions within the same 'Payment Information' block have the same 
+   'Creditor Scheme Identification'. Note: This rule checks all fields except postal addresses and 
+   DateAndPlaceOfBirth are the same. However, most checks are not needed because (a) the Nm, postal 
+   address and OrgId fields are excluded except for the AOS community, and (b) these fields as well 
+   as all prvtId fields other than othrId are excluded in pacs3.
+   Ref pg 11, row 14, SEPA C2B Implementation Guidelines. */
+
+context PaymentInstructionInformation2
+inv EPC_cdtrSchmeId_UNUSED_FULL:
+drctDbtTxInf.drctDbtTx.cdtrSchmeId->forAll(a, b | 
+  let aOrgId: OrganisationIdentification2 = a.id.orgId in
+  let bOrgId: OrganisationIdentification2 = b.id.orgId in
+  let aPrvtId: OrderedSet(PersonIdentification3) = a.id.prvtId in
+  let bPrvtId: OrderedSet(PersonIdentification3) = b.id.prvtId in
+    a.nm = b.nm and
+    aOrgId.bIC= bOrgId.bIC and
+    aOrgId.iBEI= bOrgId.iBEI and
+    aOrgId.bEI= bOrgId.bEI and
+    aOrgId.eANGLN= bOrgId.eANGLN and
+    aOrgId.uSCHU= bOrgId.uSCHU and
+    aOrgId.dUNS = bOrgId.dUNS and
+    aOrgId.bkPtyId = bOrgId.bkPtyId and
+    aOrgId.taxIdNb = bOrgId.taxIdNb and
+    aOrgId.prtryId.id = bOrgId.prtryId.id and
+    aOrgId.prtryId.issr = bOrgId.prtryId.issr and
+    aPrvtId.drvrsLicNb = bPrvtId.drvrsLicNb and
+    aPrvtId.cstmrNb= bPrvtId.cstmrNb and
+    aPrvtId.sclSctyNb = bPrvtId.sclSctyNb and
+    aPrvtId.alnRegnNb= bPrvtId.alnRegnNb and
+    aPrvtId.psptNb = bPrvtId.psptNb and
+    aPrvtId.taxIdNb = bPrvtId.taxIdNb and
+    aPrvtId.idntyCardNb = bPrvtId.idntyCardNb and
+    aPrvtId.mplyrIdNb = bPrvtId.mplyrIdNb and
+    aPrvtId.othrId.id = bPrvtId.othrId.id and
+    aPrvtId.othrId.idTp = bPrvtId.othrId.idTp and
+    aPrvtId.issr = bPrvtId.issr and
+    a.ctryOfRes = b.ctryOfRes)
+
+endpackage

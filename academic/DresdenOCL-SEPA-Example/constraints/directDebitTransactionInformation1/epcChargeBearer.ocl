@@ -1,0 +1,13 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* It is recommended that Charge Bearer be specified as part of Payment Information (PmtInf) and not Direct 
+   Debit Transaction Information (DrctDbTxInf). 
+   See row 10 of section 2.1.3 of Payment Information pg 9 of SEPA B2B Direct Debit C2B Implementation 
+   Guidelines document. */
+
+context DirectDebitTransactionInformation1
+inv EPC_Charge_Bearer:
+chrgBr->size() = 0
+
+endpackage

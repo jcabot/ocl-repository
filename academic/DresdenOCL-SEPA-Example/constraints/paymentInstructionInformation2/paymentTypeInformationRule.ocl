@@ -1,0 +1,12 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* If PaymentTypeInformation is present, then DirectDebitTransactionInformation/PaymentTypeInformation is
+   not allowed.
+   Ref. p.86 of Payments_Standards-Initiation_updated.pdf. */
+
+context PaymentInstructionInformation2
+inv PaymentTypeInformationRule:
+pmtTpInf->size()>0 implies drctDbtTxInf->forAll(pmtTpInf.oclIsUndefined())
+			
+endpackage

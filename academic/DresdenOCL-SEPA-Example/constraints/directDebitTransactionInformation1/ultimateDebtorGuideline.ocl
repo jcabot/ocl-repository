@@ -1,0 +1,68 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Guideline: UltimateDebtor may only be present if different from Debtor. Note: Only one occurrence of 
+   prvtId is allowed in ultmtDbtr and dbtr.
+   Ref p.94 of Payments_Standards-Initiated_updated.pdf. */
+
+context DirectDebitTransactionInformation1
+inv UltimateDebtorGuideline:			
+(ultmtDbtr.nm->size() = 1 implies 
+                ultmtDbtr.nm <> dbtr.nm) and
+
+((ultmtDbtr.id.orgId.bIC->size() = 1 and dbtr.id.orgId.bIC->size() = 1) implies
+    ultmtDbtr.id.orgId.bIC <> dbtr.id.orgId.bIC) and
+
+((ultmtDbtr.id.orgId.iBEI->size() = 1 and dbtr.id.orgId.iBEI->size() = 1) implies
+    ultmtDbtr.id.orgId.iBEI <> dbtr.id.orgId.iBEI) and
+
+((ultmtDbtr.id.orgId.bEI->size() = 1 and dbtr.id.orgId.bEI->size() = 1) implies
+    ultmtDbtr.id.orgId.bEI <> dbtr.id.orgId.bEI) and 
+
+((ultmtDbtr.id.orgId.eANGLN->size() = 1 and dbtr.id.orgId.eANGLN->size() = 1) implies
+    ultmtDbtr.id.orgId.eANGLN <> dbtr.id.orgId.eANGLN) and
+
+((ultmtDbtr.id.orgId.uSCHU->size() = 1 and dbtr.id.orgId.uSCHU->size() = 1) implies
+    ultmtDbtr.id.orgId.uSCHU <> dbtr.id.orgId.uSCHU) and
+
+((ultmtDbtr.id.orgId.dUNS->size() = 1 and dbtr.id.orgId.dUNS->size() = 1) implies
+    ultmtDbtr.id.orgId.dUNS <> dbtr.id.orgId.dUNS) and
+
+((ultmtDbtr.id.orgId.bkPtyId->size() = 1 and dbtr.id.orgId.bkPtyId->size() = 1) implies
+    ultmtDbtr.id.orgId.bkPtyId <> dbtr.id.orgId.bkPtyId) and
+
+((ultmtDbtr.id.orgId.taxIdNb->size() = 1 and dbtr.id.orgId.taxIdNb->size() = 1) implies
+    ultmtDbtr.id.orgId.taxIdNb <> dbtr.id.orgId.taxIdNb) and
+
+((ultmtDbtr.id.orgId.prtryId.id->size() = 1 and dbtr.id.orgId.prtryId.id->size() = 1) implies
+    ultmtDbtr.id.orgId.prtryId.id <> dbtr.id.orgId.prtryId.id) and 
+
+((ultmtDbtr.id.prvtId.drvrsLicNb->size() = 1 and dbtr.id.prvtId.drvrsLicNb->size() = 1) implies
+    ultmtDbtr.id.prvtId.drvrsLicNb <> dbtr.id.prvtId.drvrsLicNb) and
+
+((ultmtDbtr.id.prvtId.cstmrNb->size() = 1 and dbtr.id.prvtId.cstmrNb->size() = 1) implies
+    ultmtDbtr.id.prvtId.cstmrNb <> dbtr.id.prvtId.cstmrNb) and
+
+((ultmtDbtr.id.prvtId.sclSctyNb->size() = 1 and dbtr.id.prvtId.sclSctyNb->size() = 1) implies
+    ultmtDbtr.id.prvtId.sclSctyNb <> dbtr.id.prvtId.sclSctyNb) and
+
+((ultmtDbtr.id.prvtId.alnRegnNb->size() = 1 and dbtr.id.prvtId.alnRegnNb->size() = 1) implies
+    ultmtDbtr.id.prvtId.alnRegnNb <> dbtr.id.prvtId.alnRegnNb) and 
+
+((ultmtDbtr.id.prvtId.psptNb->size() = 1 and dbtr.id.prvtId.psptNb->size() = 1) implies
+    ultmtDbtr.id.prvtId.psptNb <> dbtr.id.prvtId.psptNb) and 
+
+((ultmtDbtr.id.prvtId.taxIdNb->size() = 1 and dbtr.id.prvtId.taxIdNb->size() = 1) implies
+    ultmtDbtr.id.prvtId.taxIdNb <> dbtr.id.prvtId.taxIdNb) and
+
+((ultmtDbtr.id.prvtId.idntyCardNb->size() = 1 and dbtr.id.prvtId.idntyCardNb->size() = 1) implies
+    ultmtDbtr.id.prvtId.idntyCardNb <> dbtr.id.prvtId.idntyCardNb) and
+
+((ultmtDbtr.id.prvtId.mplyrIdNb->size() = 1 and dbtr.id.prvtId.mplyrIdNb->size() = 1) implies
+    ultmtDbtr.id.prvtId.mplyrIdNb <> dbtr.id.prvtId.mplyrIdNb) and 
+
+((ultmtDbtr.id.prvtId.othrId->size() = 1 and dbtr.id.prvtId.othrId->size() = 1) implies
+    (ultmtDbtr.id.prvtId.othrId.id <> dbtr.id.prvtId.othrId.id or
+    ultmtDbtr.id.prvtId.othrId.idTp <> dbtr.id.prvtId.othrId.idTp))
+
+endpackage

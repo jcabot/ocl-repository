@@ -1,0 +1,11 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* For Creditor Account Id (PmtInf CdtrAcct Id), only IBAN is allowed. 
+   See row 18 on page 8 of SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context PaymentInstructionInformation2
+inv EPC_CdtrAcctId:
+cdtrAcct.id.bBAN->size() = 0 and cdtrAcct.id.prtryAcct->size() = 0 and cdtrAcct.id.uPIC->size() = 0
+
+endpackage

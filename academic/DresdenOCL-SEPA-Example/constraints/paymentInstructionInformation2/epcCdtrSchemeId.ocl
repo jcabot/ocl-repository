@@ -1,0 +1,16 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* It is recommended that all transactions within the same 'Payment Information' block have the same
+   'Creditor Scheme Identification'. Note: this rule only checks PrvtId OthrId since this the only Id 
+   that can be used in pacs3. Rule EPC_cdtrSchmeId_UNUSED_FULL can be enabled if this is inadequate.
+   Ref pg 11, row 14, SEPA C2B Implementation Guidelines. */
+
+context PaymentInstructionInformation2
+inv EPC_cdtrSchmeId:
+drctDbtTxInf.drctDbtTx.cdtrSchmeId->forAll(a, b | 
+  a.oclIsUndefined() or b.oclIsUndefined() or
+  (a.id.prvtId.othrId.id = b.id.prvtId.othrId.id and
+  a.id.prvtId.othrId.idTp = b.id.prvtId.othrId.idTp))
+
+endpackage

@@ -1,0 +1,20 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Warning: The elements Nm, PstlAdr, Id OrgId and CtryOfRes in DrctDbtTx CdtrSchmeId are AOS only.
+   Instructed banks that are not in the AOS community may reject messages containing these elements.
+   Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context DirectDebitTransaction1
+inv EPC_AOS_CdtrSchmeId:
+cdtrSchmeId.oclIsUndefined()
+or
+(cdtrSchmeId.nm->size() = 0 
+and 
+cdtrSchmeId.pstlAdr->size() = 0 
+and 
+cdtrSchmeId.id.orgId->size() = 0 
+and 
+cdtrSchmeId.ctryOfRes->size() = 0)
+
+endpackage

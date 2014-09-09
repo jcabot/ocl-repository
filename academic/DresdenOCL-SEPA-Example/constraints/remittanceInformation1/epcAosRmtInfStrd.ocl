@@ -1,0 +1,19 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Warning: The elements RfrdDocInf, RfrdDocRltdDt, RfrdDocAmt, CdtrRefInf cdtrRefTp Prtry, Invcr, Invcee 
+   and AddtlRmtInf in RmtInf Strd are AOS only. Instructed banks that are not in the AOS community may reject
+   messages containing these elements.
+   Ref section 1.2 if the SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context RemittanceInformation1
+inv EPC_AOS_RmtInfStrd:
+strd.rfrdDocInf->size() = 0 and 
+strd.rfrdDocRltdDt->size() = 0 and 
+strd.rfrdDocAmt->size() = 0 and
+strd.cdtrRefInf.cdtrRefTp.prtry->size() = 0 and
+strd.invcr->size() = 0 and 
+strd.invcee->size() = 0 and 
+strd.addtlRmtInf->size() = 0
+
+endpackage

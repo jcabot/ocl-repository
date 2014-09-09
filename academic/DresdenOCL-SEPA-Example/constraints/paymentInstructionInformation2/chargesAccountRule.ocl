@@ -1,0 +1,11 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* If ChargesAccountAgent is present, then ChargesAccount must be present.
+   Ref. p.86 of Payments_Standards-Initiation_updated.pdf. */
+
+context PaymentInstructionInformation2
+inv ChargesAccountRule:
+chrgsAcctAgt->size() > 0 implies chrgsAcct->size() > 0
+
+endpackage

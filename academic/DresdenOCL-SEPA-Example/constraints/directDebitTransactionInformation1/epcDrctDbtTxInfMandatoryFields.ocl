@@ -1,0 +1,16 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* Direct Debit Transaction (drctDbtTx), Mandate Related Information (drctDbtTx MndtRltdInf), Mandate
+   Identification (drctDbtTx MndtRltdInf MndtId) and Date of Signature (drctDbtTx MndtRltdInf DtOfSgntr) 
+   are all mandatory fields within Direct Debit Transaction Information (drctDbtTxInf). 
+   See rows 1-4 on pg 10 of SEPA B2B Direct Debit C2B Implementation Guidelines. */
+
+context DirectDebitTransactionInformation1
+inv EPC_DrctDbTxInf_MandatoryFields:
+drctDbtTx->size() > 0 
+and self.drctDbtTx.mndtRltdInf->size() > 0
+and self.drctDbtTx.mndtRltdInf.mndtId->size() >0 
+and self.drctDbtTx.mndtRltdInf.dtOfSgntr->size() > 0
+
+endpackage

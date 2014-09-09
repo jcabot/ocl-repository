@@ -1,0 +1,16 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* For Debtor Agent in Direct Debit Transaction Information (drctDbtTxInf dbtrAgt finInstnId), only BIC is 
+   allowed. 
+   Ref row 14 on pg 12 of SEPA B2B Direct Debit C2B Implementation Guidelines Version 1.3. */
+
+context DirectDebitTransactionInformation1
+inv EPC_dbtrAgtfinInstnId:
+dbtrAgt.finInstnId.clrSysMmbId->size() = 0 and 
+dbtrAgt.finInstnId.nmAndAdr->size() =0 and 
+dbtrAgt.finInstnId.prtryId->size() = 0 and 
+dbtrAgt.finInstnId.cmbndId->size() = 0 and
+dbtrAgt.brnchId->size() = 0
+
+endpackage

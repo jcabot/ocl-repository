@@ -1,0 +1,12 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* If GroupHeader/Grouping is present and equals GRPD, then one and only one occurrence of 
+   PaymentInformation must be present.
+   Ref. p.79 of Payments_Standards-Initiation_updated.pdf. */
+
+context Pain00800101
+inv Grouping1Rule:
+(grpHdr.grpg->size() > 0 and grpHdr.grpg = 'GRPD') implies pmtInf->size() = 1
+
+endpackage

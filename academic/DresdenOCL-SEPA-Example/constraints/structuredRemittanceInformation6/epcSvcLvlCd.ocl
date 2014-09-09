@@ -1,0 +1,12 @@
+-- @model{../../model/pain.008.001.01corrected.xsd}
+package isoStdIso20022TechXsdPain00800101
+
+/* The value for Service Level Code (PmtInf pmtTpInf svcLvl Cd) must be set to 'SEPA'. 
+   See row 7 of section 2.1.3 of Payment Information pg 7 of SEPA B2B Direct Debit C2B 
+   Implementation Guidelines document. */
+
+context ServiceLevel3Choice
+inv EPC_svcLvlCd:
+cd = 'SEPA'
+
+endpackage
