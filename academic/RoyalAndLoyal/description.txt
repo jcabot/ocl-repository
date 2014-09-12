@@ -1,0 +1,5 @@
+Name: RoyalAndLoyal
+Tool: Eclipse OCL
+Description: The Royal and Loyal example fromn Jos Warmer's and Anneke Kleppe's book: The Object Constraint Language Second Edition
+Notes: These files are copied from org.eclipse.ocl/examples/org.eclipse.ocl.examples.project.royalandloyal in https://git.eclipse.org/r/p/ocl/org.eclipse.ocl
+
