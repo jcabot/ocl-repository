@@ -1,0 +1,5 @@
+Name: DBLP
+Tool: ArgoUML
+Description: Model of the well-known DBLP system ( http://dblp.uni-trier.de/db/)
+Notes: Model developed as a case study by the "Conceptual Modeling of Information Systems" research group. URL: http://www.essi.upc.edu/~gmc/index_e.html
+

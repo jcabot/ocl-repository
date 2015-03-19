@@ -1,0 +1,4 @@
+Name: Scalability
+Tool: ArgoUML
+Description: Simple loop of classes to test scalability of verification tools developed by Jordi Cabot, Robert Clarisó and Daniel Riera
+Notes: The example includes the same pattern model (in two variants: sat and unsat) on different sizes for scalability tests

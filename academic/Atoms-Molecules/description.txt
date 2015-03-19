@@ -1,0 +1,4 @@
+Name: Atoms
+Tool: ArgoUML
+Description: Simple example developed by Jordi Cabot, Robert Clarisó and Daniel Riera
+Notes: There are two sets of constraints: a satisfiable and an unsatisfiable set

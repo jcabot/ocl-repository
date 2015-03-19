@@ -1,0 +1,329 @@
+model AbstractMetaOps
+
+class MetaOperations
+operations
+  createInitialWorld( numberOfCoins : Integer, pursesToBeCreated : Set( String ) )
+  createIgnoreWorld( )
+  createOkayWorld( fromPurse : String, toPurse : String, value : Set( Coin ) )
+  createLostWorld( fromPurse : String, toPurse : String, value : Set( Coin ) )
+end
+
+class WorldsValidation
+  operations
+    validate( ) : Boolean =
+      abInitWorld <> oclUndefined( AbInitWorld ) and validateWorldChain( abInitWorld )
+    
+    validateWorldChain( predWorld : AbWorld ) : Boolean =
+      if predWorld.succ->isEmpty() then predWorld.oclIsTypeOf( AbEndWorld )
+      else abOperations.abTransfer( predWorld, predWorld.succ ) and
+           validateWorldChain( predWorld.succ ) endif
+           
+  constraints
+    inv ValidProgressOfTransfers: validate()
+end
+
+class AbOperations
+operations
+  abTransfer( predWorld : AbWorld, succWorld : AbWorld) : Boolean =
+    abIgnore( predWorld, succWorld ) 
+    or abTransferOkay( predWorld, succWorld ) 
+    or abTransferLost( predWorld, succWorld )
+  
+  abIgnore( predWorld : AbWorld, succWorld : AbWorld) : Boolean =
+    predWorld.transferDetails.fromPurse = oclUndefined( String ) and
+    predWorld.transferDetails.toPurse = oclUndefined( String ) and
+    predWorld.transferDetails.value= oclUndefined( Set( Coin ) ) and
+    ignoreConstraints.worldDoesNotChange( predWorld, succWorld )
+  
+  abTransferOkay( predWorld : AbWorld, succWorld : AbWorld ) : Boolean =
+    not ( predWorld.transferDetails.fromPurse = oclUndefined( String ) ) and
+    not ( predWorld.transferDetails.toPurse = oclUndefined( String ) ) and
+    not ( predWorld.transferDetails.value= oclUndefined( Set( Coin ) ) ) and
+    commonConstraints.participatingPursesMustExist( predWorld ) and
+    commonConstraints.fromAndToDiffer( predWorld ) and
+    commonConstraints.balanceNotSmallerThanValue( predWorld ) and
+    commonConstraints.setOfPursesDoesNotChange( predWorld, succWorld ) and
+    commonConstraints.pursesNotParticipatingDoNotChange( predWorld, succWorld ) and 
+    okayConstraints.fromPurseBalanceDecreases( predWorld, succWorld ) and
+    okayConstraints.fromPurseLostDoesNotChange( predWorld, succWorld ) and
+    okayConstraints.toPurseBalanceIncreases( predWorld, succWorld ) and
+    okayConstraints.toPurseLostDoesNotChange( predWorld, succWorld ) and
+    commonConstraints.participatingPursesMustExistSuccWorld( predWorld, succWorld )
+ 
+  abTransferLost( predWorld : AbWorld, succWorld : AbWorld) : Boolean =
+    not ( predWorld.transferDetails.fromPurse = oclUndefined( String ) ) and
+    not ( predWorld.transferDetails.toPurse = oclUndefined( String ) ) and
+    not ( predWorld.transferDetails.value= oclUndefined( Set( Coin ) ) ) and
+    commonConstraints.participatingPursesMustExist( predWorld ) and
+    commonConstraints.fromAndToDiffer( predWorld ) and
+    commonConstraints.balanceNotSmallerThanValue( predWorld ) and
+    commonConstraints.setOfPursesDoesNotChange( predWorld, succWorld ) and
+    commonConstraints.pursesNotParticipatingDoNotChange( predWorld, succWorld ) and 
+    lostConstraints.fromPurseBalanceDecreases( predWorld, succWorld ) and
+    lostConstraints.fromPurseLostIncreases( predWorld, succWorld ) and
+    lostConstraints.toPurseBalanceAndLostDoNotChange( predWorld, succWorld ) and
+    commonConstraints.participatingPursesMustExistSuccWorld( predWorld, succWorld )
+end
+
+class AbWorld
+constraints
+  inv PredWorldAndSuccWorldExisting :
+    self.oclIsTypeOf( AbWorld ) implies
+      ( pred->size() = 1 and
+        succ->size() = 1 )
+end
+
+class TransferDetails
+attributes
+  fromPurse : String
+  toPurse : String
+  value : Set ( Coin )
+end
+
+class AbInitWorld < AbWorld
+constraints
+  inv AtMostOneInitialWorld :
+    AbInitWorld.allInstances->size() < 2
+end
+
+class AbEndWorld < AbWorld
+constraints 
+  inv PredWorldExisting :
+    pred->size() = 1
+  inv NoSuccWorldExisting :
+    succ->isEmpty()
+end
+
+class AbPurse
+attributes
+  name : String
+constraints
+  inv ValidPurseNames: let small:Set( String ) =
+          Set{'a','b','c','d','e','f','g','h','i','j','k','l','m',
+              'n','o','p','q','r','s','t','u','v','w','x','y','z'} in
+        let capital:Set( String ) =
+          Set{'A','B','C','D','E','F','G','H','I','J','K','L','M',
+              'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'} in
+        let digit:Set( String ) =
+          Set{'0','1','2','3','4','5','6','7','8','9'} in
+       name.isDefined and 
+       name.size() > 0 and
+       Set{ 1..name.size() }->forAll( i |
+         Set{ '_' }->union( small )->union( capital )->union( digit )->
+           includes( name.substring( i, i ) ) )
+end
+
+class Coin
+constraints
+  inv BelongsToPurse :
+    AbWorld.allInstances->forAll( world |
+      world.abAuthPurse->exists( purse |
+        ( purse.coinBalance->union( purse.coinLost ) )->includes( self ) ) )
+  inv NoCoinSharing :
+    ( purseBalance->union( purseLost ) )->forAll( purse1, purse2 |
+        purse1 <> purse2 implies 
+          purse1.abWorld <> purse2.abWorld )
+end
+
+class CommonConstraints
+operations
+  participatingPursesMustExist( predWorld : AbWorld ) : Boolean =   
+    predWorld.abAuthPurse->exists( purse |
+      purse.name = predWorld.transferDetails.fromPurse ) and
+    predWorld.abAuthPurse->exists( purse |
+      purse.name = predWorld.transferDetails.toPurse )
+  
+  fromAndToDiffer( predWorld : AbWorld ) : Boolean =
+    predWorld.transferDetails.fromPurse <> predWorld.transferDetails.toPurse
+    
+  balanceNotSmallerThanValue( predWorld : AbWorld ) : Boolean =                  
+    predWorld.abAuthPurse->forAll( prePurse |
+      prePurse.name = predWorld.transferDetails.fromPurse implies
+        prePurse.coinBalance->includesAll( predWorld.transferDetails.value ) )
+    
+  setOfPursesDoesNotChange( predWorld : AbWorld, 
+                            succWorld : AbWorld ) : Boolean =
+    predWorld.abAuthPurse->size() = succWorld.abAuthPurse->size() and
+    succWorld.abAuthPurse->forAll ( postPurse |
+      predWorld.abAuthPurse->exists ( prePurse |
+        postPurse.name = prePurse.name ) ) and
+    predWorld.abAuthPurse->forAll ( prePurse |
+      succWorld.abAuthPurse->exists ( postPurse |
+        prePurse.name = postPurse.name ) )
+        
+  pursesNotParticipatingDoNotChange( predWorld : AbWorld , 
+                                     succWorld : AbWorld ) : Boolean =
+    ( predWorld.abAuthPurse->iterate( purse ; 
+        purses : Set( AbPurse ) = oclEmpty( Set( AbPurse ) ) |
+          if purse.name = predWorld.transferDetails.fromPurse or
+             purse.name = predWorld.transferDetails.toPurse
+          then purses
+          else purses->including( purse ) endif ) )->forAll( pPre |
+            ( succWorld.abAuthPurse->iterate( purse ; 
+                purses : Set( AbPurse ) = oclEmpty( Set( AbPurse ) ) |
+                  if purse.name = predWorld.transferDetails.fromPurse or
+                     purse.name = predWorld.transferDetails.toPurse
+                  then purses
+                  else purses->including( purse ) endif ) )->forAll( pPost |
+                    pPre.coinBalance = pPost.coinBalance and
+                    pPre.coinLost = pPost.coinLost ) )
+            
+  participatingPursesMustExistSuccWorld( predWorld : AbWorld, 
+                                         succWorld : AbWorld ) : Boolean =
+    succWorld.abAuthPurse->exists( purse |
+      purse.name = predWorld.transferDetails.fromPurse ) and
+    succWorld.abAuthPurse->exists( purse |
+      purse.name = predWorld.transferDetails.toPurse )
+end
+
+class OkayConstraints
+operations
+  fromPurseBalanceDecreases( predWorld : AbWorld, 
+                             succWorld : AbWorld ) : Boolean =
+    succWorld.abAuthPurse->forAll( postPurse |
+      postPurse.name = predWorld.transferDetails.fromPurse implies
+        predWorld.abAuthPurse->forAll( prePurse |
+          prePurse.name = predWorld.transferDetails.fromPurse implies
+            postPurse.coinBalance = 
+            prePurse.coinBalance - predWorld.transferDetails.value ) )
+  
+  fromPurseLostDoesNotChange( predWorld : AbWorld, 
+                              succWorld : AbWorld ) : Boolean =
+    succWorld.abAuthPurse->forAll( postPurse |
+      postPurse.name = predWorld.transferDetails.fromPurse implies
+        predWorld.abAuthPurse->forAll( prePurse |
+          prePurse.name = predWorld.transferDetails.fromPurse implies
+            postPurse.coinLost = prePurse.coinLost ) )
+  
+  toPurseBalanceIncreases( predWorld : AbWorld, 
+                           succWorld : AbWorld ) : Boolean =
+    succWorld.abAuthPurse->forAll( postPurse |
+      postPurse.name = predWorld.transferDetails.toPurse implies
+        predWorld.abAuthPurse->forAll( prePurse |
+          prePurse.name = predWorld.transferDetails.toPurse implies
+            postPurse.coinBalance = prePurse.coinBalance->
+              union( predWorld.transferDetails.value ) ) )
+              
+  toPurseLostDoesNotChange( predWorld : AbWorld, 
+                            succWorld : AbWorld ) : Boolean =
+    succWorld.abAuthPurse->forAll( postPurse |
+      postPurse.name = predWorld.transferDetails.toPurse implies
+        predWorld.abAuthPurse->forAll( prePurse |
+          prePurse.name = predWorld.transferDetails.toPurse implies
+            postPurse.coinLost = prePurse.coinLost ) )
+end
+
+class LostConstraints
+operations
+  fromPurseBalanceDecreases( predWorld : AbWorld, 
+                             succWorld : AbWorld ) : Boolean =
+    succWorld.abAuthPurse->forAll( postPurse |
+      postPurse.name = predWorld.transferDetails.fromPurse implies
+        predWorld.abAuthPurse->forAll( prePurse |
+          prePurse.name = predWorld.transferDetails.fromPurse implies
+            postPurse.coinBalance = 
+            prePurse.coinBalance - predWorld.transferDetails.value ) )
+            
+  fromPurseLostIncreases( predWorld : AbWorld, 
+                          succWorld : AbWorld ) : Boolean =
+    succWorld.abAuthPurse->forAll( postPurse |
+      postPurse.name = predWorld.transferDetails.fromPurse implies
+        predWorld.abAuthPurse->forAll( prePurse |
+          prePurse.name = predWorld.transferDetails.fromPurse implies
+            postPurse.coinLost = prePurse.coinLost->
+              union( predWorld.transferDetails.value ) ) )
+              
+  toPurseBalanceAndLostDoNotChange( predWorld : AbWorld, 
+                                    succWorld : AbWorld ) : Boolean =
+    succWorld.abAuthPurse->forAll( postPurse |
+      postPurse.name = predWorld.transferDetails.toPurse implies
+        predWorld.abAuthPurse->forAll( prePurse |
+          prePurse.name = predWorld.transferDetails.toPurse implies
+            postPurse.coinLost = prePurse.coinLost and
+            postPurse.coinBalance = prePurse.coinBalance ) )
+  
+end
+
+class IgnoreConstraints
+operations
+  worldDoesNotChange( predWorld : AbWorld, succWorld : AbWorld ) : Boolean =
+    predWorld.succ = succWorld and
+    predWorld.abAuthPurse->size() = succWorld.abAuthPurse->size() and
+    succWorld.abAuthPurse->forAll ( postPurse |
+      predWorld.abAuthPurse->exists ( prePurse |
+        postPurse.name = prePurse.name ) ) and
+    predWorld.abAuthPurse->forAll ( prePurse |
+      succWorld.abAuthPurse->exists ( postPurse |
+        prePurse.name = postPurse.name ) ) and
+    predWorld.abAuthPurse->forAll( pPre |
+        succWorld.abAuthPurse->forAll( pPost |
+          pPre.name = pPost.name implies
+            ( pPre.coinBalance = pPost.coinBalance and
+              pPre.coinLost = pPost.coinLost ) ) )
+end
+
+association Order
+between
+  AbWorld[0..1] role pred
+  AbWorld[0..1] role succ
+end
+
+association AbstractAuthenticPurses
+between
+  AbWorld[1] 
+  AbPurse[*] role abAuthPurse
+end
+
+association WorldTransfer
+between
+  AbWorld[1]
+  TransferDetails[1]
+end
+
+association Balance
+between
+  AbPurse[*] role purseBalance
+  Coin[*] role coinBalance
+end
+
+association Lost
+between
+  AbPurse[*] role purseLost
+  Coin[*] role coinLost
+end
+
+association Init
+between
+  WorldsValidation[1]
+  AbInitWorld[1]
+end
+
+association ValidOperations
+between 
+  WorldsValidation[1]
+  AbOperations[1]
+end
+
+association OperationsCommonConstraints
+between
+  AbOperations[1] role opsCommon
+  CommonConstraints[1]
+end
+
+association OperationsIgnoreConstraints
+between
+  AbOperations[1] role opsIgnore
+  IgnoreConstraints[1]
+end
+
+association OperationsOkayConstraints
+between
+  AbOperations[1] role opsOkay
+  OkayConstraints[1]
+end
+
+association OperationsLostConstraints
+between
+  AbOperations[1] role opsLost
+  LostConstraints[1]
+end

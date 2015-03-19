@@ -1,0 +1,5 @@
+Name: Sudoku
+Tool: none
+Description: Model of a typical sudoku game
+Notes: Only the pdf is available. Model by Albert Tort from the "Conceptual Modeling of Information Systems" research group. URL: http://www.essi.upc.edu/~gmc/index_e.html
+

@@ -1,0 +1,222 @@
+package DBLP
+  context Person inv nameIsKey:
+   Person::allInstances() -> isUnique(name)
+endpackage
+
+package DBLP
+  context Book inv isbnIsKey:
+   Book::allInstances() -> isUnique(isbn)
+endpackage
+
+package DBLP
+  context BookSeries inv idIsKey:
+    BookSeries::allInstances() -> isUnique(id)
+endpackage
+
+package DBLP
+  context BookSeries inv idAndNumberIdentifyBookSeriesIssue:
+    self.bookSeriesIssue -> isUnique(number)
+endpackage
+
+package DBLP
+  context Journal inv issnIsKey:
+    Journal::allInstances() -> isUnique(issn)
+endpackage
+
+package DBLP
+  context Journal inv titleIsKey:
+    Journal::allInstances() -> isUnique(title)
+endpackage
+
+package DBLP
+  context Journal inv journalAndVolumeIdentifyJournalVolume:
+    self.journalVolume -> isUnique(volume)
+endpackage
+
+package DBLP
+  context JournalVolume inv journalVolumeAndNumberIdentifyJournalIssue:
+    self.journalIssue -> isUnique(number)
+endpackage
+
+package DBLP
+  context JournalIssue inv journalAndTitleIdentifyJournalSection:
+    self.journalSection -> isUnique(title)
+endpackage
+
+package DBLP
+  context ConferenceSeries inv nameIsKey:
+    ConferenceSeries::allInstances() -> isUnique(name)
+endpackage
+
+package DBLP
+  context ConferenceEdition inv titleIsKey:
+    ConferenceEdition::allInstances() -> isUnique(title)
+endpackage
+
+package DBLP
+  context BookChapter inv correctPagination:
+    self.iniPage <= self.endPage
+endpackage
+
+package DBLP
+  context JournalPaper inv correctPagination:  
+    self.iniPage <= self.endPage
+endpackage
+
+package DBLP
+  context JournalIssue inv correctPagination:
+    self.journalPaper -> forAll(p1,p2 | p1<>p2 implies p1.iniPage > p2.endPage or p2.iniPage > p1.endPage)
+endpackage
+
+package DBLP
+  context EditedBook inv correctPagination:
+  self.bookChapter -> forAll(c1,c2 | c1<>c2 implies c1.iniPage > c2.endPage or c2.iniPage > c1.endPage)
+endpackage
+
+package DBLP
+  context BookSeriesIssue inv correctPagination:
+    self.bookChapter -> forAll(c1,c2 | c1<>c2 implies c1.iniPage > c2.endPage or c2.iniPage > c1.endPage)
+endpackage
+
+package DBLP
+  context Journal inv consecutiveVolumes:
+    self.journalVolume -> sortedBy(volume).volume = sequence{1..self.journalVolume()->size()}
+endpackage
+
+package DBLP
+  context EditedBook inv compatibleYear:
+    (self.conferenceEdition -> notEmpty()) implies self.publicationYear >= self.conferenceEdition.year
+endpackage
+
+package DBLP
+  context BookSeriesIssue inv compatibleYear:
+    (self.conferenceEdition -> notEmpty()) implies self.publicationYear >= self.conferenceEdition.year 
+endpackage
+
+package DBLP
+  context JournalIssue inv compatibleYear:
+    (self.conferenceEdition -> notEmpty()) implies self.year >= self.conferenceEdition.year 
+endpackage
+
+package DBLP
+  context EditedBook inv editedBookWithoutRepetitions:
+    self.bookSection -> isUnique(title)
+endpackage
+
+package DBLP
+  context BookSeriesIssue inv bookSeriesIssueWithoutRepetitions:
+    self.bookSection -> isUnique(title)
+endpackage
+
+package DBLP
+  context JournalSection inv journalSectionWithoutRepetitions:
+    self.journalPaper -> isUnique(title)
+endpackage
+
+package DBLP
+  context BookSection inv bookSectionWithoutRepetitions:
+    self.bookChapter -> isUnique(title)
+endpackage
+
+package DBLP
+  context ConferenceEdition inv conferenceIsPublished:
+    self.editedBook -> notEmpty() or self.bookSeriesIssue -> notEmpty() or self.journalIssue -> notEmpty()
+endpackage
+
+package DBLP
+  context Person::numPublications:Natural
+    derive: self.publication -> size()
+endpackage
+
+package DBLP
+  context JournalIssue::numPages:Natural
+    derive: self.journalPaper -> sortedBy(endPage) -> last().endPage
+endpackage
+
+--package DBLP
+  --context Publication::year():Year
+    --body: (abstract)
+--endpackage
+
+package DBLP
+  context EditedBook::year():Year
+    body: self.publicationYear
+endpackage
+
+package DBLP
+  context AuthoredBook::year():Year
+    body: self.publicationYear
+endpackage
+
+package DBLP
+  context BookChapter::year():Year
+    body: if self.editedBook -> notEmpty() then self.editedBook.publicationYear else self.bookSeriesIssue.publicationYear
+endpackage
+
+package DBLP
+  context JournalPaper::year():Year
+    body: self.journalIssue.year
+endpackage
+
+package DBLP
+  context Publication::edition():String
+    body: (abstract)
+endpackage
+
+package DBLP
+  context EditedBook::edition():String
+    body: self.publisher.concat(self.publicationYear)
+endpackage
+
+package DBLP
+  context AuthoredBook::edition():String
+    body: self.publisher.concat(self.publicationYear)
+endpackage
+
+package DBLP
+  context BookChapter::edition():String
+    body: if (self.conferencePaper)
+          then 
+            if self.editedBook -> notEmpty()
+              then 
+                   self.editedBook.conferenceEdition.conferenceSeries.acronym.concat(self.editedBook.conferenceEdition.year.concat(self.iniPage.concat(self.endPage))) 
+              else 
+                   self.bookSeriesIssue.conferenceEdition.conferenceSeries.acronym.concat(self.bookSeriesIssue.conferenceEdition.year.concat(self.iniPage.concat(self.endPage)))                    
+            else 
+              if self.editedBook -> notEmpty() 
+                then 
+                  self.editedBook.title.concat(self.editedBook.publicationYear.concat(self.iniPage.concat(self.endPage)))
+                else 
+                  self.bookSeriesIssue.title.concat(self.bookSeriesIssue.publicationYear.concat(self.iniPage.concat(self.endPage)))
+endpackage
+
+package DBLP
+  context JournalPaper::edition():String
+    body: if (self.conferencePaper)
+          then 
+             self.journalIssue.conferenceEdition.conferenceSeries.acronym.concat(self.journalIssue.conferenceEdition.year.concat(self.iniPage.concat(self.endPage)))
+          else 
+            self.journalIssue.journalVolume.journal.title.concat(self.journalIssue.journalVolume.volume.concat(self.journalIssue.number.concat(self.iniPage.concat(self.endPage.concat(self.journalIssue.year))))) 
+          endif
+endpackage
+
+package DBLP
+  context Person::Publication:Publication
+    derive: self.editedBook -> union(self.authoredPublication)
+endpackage
+
+package DBLP
+  context JournalIssue::JournalSection: JournalSection 
+    derive: self.journalPaper.journalSection
+endpackage
+
+package DBLP
+  context EditedBook::BookSection: BookSection 
+    derive: self.bookChapter.bookSection
+endpackage
+
+package DBLP
+  context BookSeriesIssue::BookSection: BookSection 
+    derive: self.bookChapter.bookSection
+endpackage
+

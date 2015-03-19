@@ -1,0 +1,47 @@
+package company
+context Product inv CorrectProduct:  self.price>0 and self.maxDiscount<=60 
+--context Product inv CorrectProduct2:  not Product::allInstances()->exists( price<=0  or  maxDiscount>60) 
+--context Product inv CorrectProduct2:  not Product::allInstances()->exists(p| not(p.price>0  and  p.maxDiscount<=60)) 
+--context Product inv CorrectProduct3:  Product::allInstances()->forAll(p| not (p.price<=0  or p.maxDiscount>60)) 
+--context Product inv CorrectProduct4: not (self.price<=0  or self.maxDiscount>60) 
+endpackage
+package company
+ context Sale inv ValidShipDate: self.shipment->forAll(sh| sh.plannedShipDate<=self.paymentDate+30) 
+endpackage
+package company
+context Category inv NotTooPendingSales: self.customer->forAll(c| c.sale->select(s|s.paymentDate>Time::now())->collect(sa|sa.amount)->sum()<=self.maxPendingAmount) 
+--context Category inv NotTooPendingSales: self.customer->forAll(c| not (c.sale->select(s|s.paymentDate>Time::now())->collect(sa|sa.amount)->sum()>self.maxPendingAmount)) 
+context Category inv AtLeastThreeCustomers: self.customer->size()>=3
+endpackage
+package company
+context RestrictedProduct inv NumberOfRestrictedProducts: RestrictedProduct::allInstances()->size()<=20
+endpackage
+
+
+-- Simplification tests
+package company
+--context Shipment inv ValidShipDate2: self.sale->notEmpty() implies
+--self.sale->forAll(s| s.shipment->forAll(sh| sh.plannedShipDate<=s.paymentDate+30))
+--context Shipment inv Valid3: self.sale.shipment->forAll(sh| sh.sale->forAll(s| sh.plannedShipDate<=s.paymentDate+30))
+endpackage
+
+package company
+--context Customer inv NotTooPendingSales2: self.category->notEmpty() implies self.category->forAll(cat| cat.customer->forAll(c| c.sale->select(s|s.paymentDate>Time::now())->collect(sa|sa.amount)->sum()<=cat.maxPendingAmount))
+--context Customer inv NotToo3: self.category.customer->forAll(c| c.sale->select(s|paymentDate>Time::now())->collect(sa|sa.amount)-> sum()<=self.category.maxPendingAmount)
+--context Customer inv NotToo4: self.sale->select(s|paymentDate>Time::now())->collect(sa|amount)-> sum()<=self.category.maxPendingAmount
+endpackage
+
+-- Examples with the not operator
+package company
+context Product inv CorrectProduct: not( self.price>0 and self.maxDiscount<=60 )
+endpackage
+package company
+ context Sale inv ValidShipDate: not (self.shipment->forAll(sh| sh.plannedShipDate<=self.paymentDate+30) )
+endpackage
+package company
+context Category inv NotTooPendingSales: not( self.customer->forAll(c| c.sale->select(s|s.paymentDate>Time::now())->collect(sa|sa.amount)->sum()<=self.maxPendingAmount) )
+context Category inv AtLeastThreeCustomers: not (self.customer->size()>=3)
+endpackage
+package company
+context RestrictedProduct inv NumberOfRestrictedProducts: not (RestrictedProduct::allInstances()->size()<=20)
+endpackage

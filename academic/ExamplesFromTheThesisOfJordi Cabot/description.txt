@@ -1,0 +1,5 @@
+Name: ThesisJCabot
+Tool: ArgoUML
+Description: Running example for the PhD Thesis of Jordi Cabot http://modeling-languages.com/wp-content/uploads/2015/03/TesiJCabot.pdf 
+Notes: 
+

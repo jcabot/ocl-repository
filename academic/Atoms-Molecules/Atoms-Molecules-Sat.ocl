@@ -1,0 +1,12 @@
+package diagram
+
+context Atom inv NonNegativeAtomicWeight: 
+  Atom::allInstances()->forAll(z| z.weight > 0)
+
+context Atom inv UniqueAtomicWeight:
+  Atom::allInstances()->isUnique(x| x.weight)
+
+context Molecule inv InertNobleGases: 
+  Molecule::allInstances()->forAll(z|z.particle->select(x|x.nobleGas)->isEmpty())
+
+endpackage

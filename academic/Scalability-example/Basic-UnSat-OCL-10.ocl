@@ -1,0 +1,30 @@
+package Package_1
+context A2 inv: A2::allInstances()->forAll(a|a.at>a.a1.at)
+endpackage
+package Package_1
+context A3 inv: A3::allInstances()->forAll(a|a.at>a.a2.at)
+endpackage
+package Package_1
+context A4 inv: A4::allInstances()->forAll(a|a.at>a.a3.at)
+endpackage
+package Package_1
+context A5 inv: A5::allInstances()->forAll(a|a.at>a.a4.at)
+endpackage
+package Package_1
+context A6 inv: A6::allInstances()->forAll(a|a.at>a.a5.at)
+endpackage
+package Package_1
+context A7 inv: A7::allInstances()->forAll(a|a.at>a.a6.at)
+endpackage
+package Package_1
+context A8 inv: A8::allInstances()->forAll(a|a.at>a.a7.at)
+endpackage
+package Package_1
+context A9 inv: A9::allInstances()->forAll(a|a.at>a.a8.at)
+endpackage
+package Package_1
+context A10 inv: A10::allInstances()->forAll(a|a.at>a.a9.at)
+endpackage
+package Package_1
+context A1 inv: A1::allInstances()->forAll(a|a.at>=a.a10.at)
+endpackage 

@@ -1,0 +1,5 @@
+Name: osCommerce
+Tool: none
+Description: Model of the well-known OsCommerce system ( http://www.oscommerce.com/ )
+Notes: Only the pdf is available. Model from the "Conceptual Modeling of Information Systems" research group. URL: http://www.essi.upc.edu/~gmc/index_e.html
+

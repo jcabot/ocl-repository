@@ -1,0 +1,4 @@
+Name: Mondex
+Tool: USE
+Description: Modeling of the Mondex card system as described in the paper Mirco Kuhlmann, Martin Gogolla: Modeling and validating Mondex scenarios described in UML and OCL with USE. Formal Asp. Comput. 20(1): 79-100 (2008)
+Notes: There are two different models for the system. Each one with its respective set of OCL definitions. See the paper for full details.

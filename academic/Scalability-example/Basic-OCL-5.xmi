@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMI xmlns:UML="org.omg.xmi.namespace.UML" xmi.version="1.2" timestamp="Wed Jul 25 17:02:22 CEST 2007">
+  <XMI.header>
+    <XMI.documentation>
+      <XMI.exporter>Netbeans XMI Writer</XMI.exporter>
+      <XMI.exporterVersion>1.0</XMI.exporterVersion>
+    </XMI.documentation>
+  </XMI.header>
+  <XMI.content>
+    <UML:Model xmi.id="a1" name="untitledModel" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false">
+      <UML:Namespace.ownedElement>
+        
+        <UML:Package xmi.id="a294" name="Package_1" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false">
+          <UML:Namespace.ownedElement>
+            <UML:Association xmi.id="a295" name="A5A1" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false">
+              <UML:Association.connection>
+                <UML:AssociationEnd xmi.id="a296" name="a5" visibility="public" isSpecification="false" isNavigable="true" ordering="unordered" aggregation="none" targetScope="instance" changeability="changeable">
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id="a297">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a298" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Class xmi.idref="a299" />
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+                <UML:AssociationEnd xmi.id="a300" name="a1" visibility="public" isSpecification="false" isNavigable="true" ordering="unordered" aggregation="none" targetScope="instance" changeability="changeable">
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id="a301">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a302" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Class xmi.idref="a303" />
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+              </UML:Association.connection>
+            </UML:Association>
+            <UML:Association xmi.id="a304" name="A4A5" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false">
+              <UML:Association.connection>
+                <UML:AssociationEnd xmi.id="a305" name="a4" visibility="public" isSpecification="false" isNavigable="true" ordering="unordered" aggregation="none" targetScope="instance" changeability="changeable">
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id="a306">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a307" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Class xmi.idref="a308" />
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+                <UML:AssociationEnd xmi.id="a309" name="a5" visibility="public" isSpecification="false" isNavigable="true" ordering="unordered" aggregation="none" targetScope="instance" changeability="changeable">
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id="a310">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a311" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Class xmi.idref="a299" />
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+              </UML:Association.connection>
+            </UML:Association>
+            <UML:Class xmi.id="a299" name="A5" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false">
+              <UML:Classifier.feature>
+                <UML:Attribute xmi.id="a312" name="at" visibility="public" isSpecification="false" ownerScope="instance" targetScope="instance" ordering="unordered">
+                  <UML:StructuralFeature.multiplicity>
+                    <UML:Multiplicity xmi.id="a313">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a314" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:StructuralFeature.multiplicity>
+                  <UML:StructuralFeature.type>
+                    <UML:DataType xmi.idref="a166" />
+                  </UML:StructuralFeature.type>
+                </UML:Attribute>
+              </UML:Classifier.feature>
+            </UML:Class>
+            <UML:Association xmi.id="a315" name="A3A4" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false">
+              <UML:Association.connection>
+                <UML:AssociationEnd xmi.id="a316" name="a3" visibility="public" isSpecification="false" isNavigable="true" ordering="unordered" aggregation="none" targetScope="instance" changeability="changeable">
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id="a317">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a318" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Class xmi.idref="a319" />
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+                <UML:AssociationEnd xmi.id="a320" name="a4" visibility="public" isSpecification="false" isNavigable="true" ordering="unordered" aggregation="none" targetScope="instance" changeability="changeable">
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id="a321">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a322" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Class xmi.idref="a308" />
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+              </UML:Association.connection>
+            </UML:Association>
+            <UML:Class xmi.id="a308" name="A4" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false">
+              <UML:Classifier.feature>
+                <UML:Attribute xmi.id="a323" name="at" visibility="public" isSpecification="false" ownerScope="instance" targetScope="instance" ordering="unordered">
+                  <UML:StructuralFeature.multiplicity>
+                    <UML:Multiplicity xmi.id="a324">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a325" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:StructuralFeature.multiplicity>
+                  <UML:StructuralFeature.type>
+                    <UML:DataType xmi.idref="a166" />
+                  </UML:StructuralFeature.type>
+                </UML:Attribute>
+              </UML:Classifier.feature>
+            </UML:Class>
+            <UML:Association xmi.id="a326" name="A2A3" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false">
+              <UML:Association.connection>
+                <UML:AssociationEnd xmi.id="a327" name="a2" visibility="public" isSpecification="false" isNavigable="true" ordering="unordered" aggregation="none" targetScope="instance" changeability="changeable">
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id="a328">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a329" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Class xmi.idref="a330" />
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+                <UML:AssociationEnd xmi.id="a331" name="a3" visibility="public" isSpecification="false" isNavigable="true" ordering="unordered" aggregation="none" targetScope="instance" changeability="changeable">
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id="a332">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a333" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Class xmi.idref="a319" />
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+              </UML:Association.connection>
+            </UML:Association>
+            <UML:Class xmi.id="a319" name="A3" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false">
+              <UML:Classifier.feature>
+                <UML:Attribute xmi.id="a334" name="at" visibility="public" isSpecification="false" ownerScope="instance" targetScope="instance" ordering="unordered">
+                  <UML:StructuralFeature.multiplicity>
+                    <UML:Multiplicity xmi.id="a335">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a336" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:StructuralFeature.multiplicity>
+                  <UML:StructuralFeature.type>
+                    <UML:DataType xmi.idref="a166" />
+                  </UML:StructuralFeature.type>
+                </UML:Attribute>
+              </UML:Classifier.feature>
+            </UML:Class>
+            <UML:Association xmi.id="a337" name="A1A2" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false">
+              <UML:Association.connection>
+                <UML:AssociationEnd xmi.id="a338" name="a1" visibility="public" isSpecification="false" isNavigable="true" ordering="unordered" aggregation="none" targetScope="instance" changeability="changeable">
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id="a339">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a340" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Class xmi.idref="a303" />
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+                <UML:AssociationEnd xmi.id="a341" name="a2" visibility="public" isSpecification="false" isNavigable="true" ordering="unordered" aggregation="none" targetScope="instance" changeability="changeable">
+                  <UML:AssociationEnd.multiplicity>
+                    <UML:Multiplicity xmi.id="a342">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a343" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:AssociationEnd.multiplicity>
+                  <UML:AssociationEnd.participant>
+                    <UML:Class xmi.idref="a330" />
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEnd>
+              </UML:Association.connection>
+            </UML:Association>
+            <UML:Class xmi.id="a330" name="A2" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false">
+              <UML:Classifier.feature>
+                <UML:Attribute xmi.id="a344" name="at" visibility="public" isSpecification="false" ownerScope="instance" targetScope="instance" ordering="unordered">
+                  <UML:StructuralFeature.multiplicity>
+                    <UML:Multiplicity xmi.id="a345">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a346" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:StructuralFeature.multiplicity>
+                  <UML:StructuralFeature.type>
+                    <UML:DataType xmi.idref="a166" />
+                  </UML:StructuralFeature.type>
+                </UML:Attribute>
+              </UML:Classifier.feature>
+            </UML:Class>
+            <UML:Class xmi.id="a303" name="A1" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false">
+              <UML:Classifier.feature>
+                <UML:Attribute xmi.id="a347" name="at" visibility="public" isSpecification="false" ownerScope="instance" targetScope="instance" ordering="unordered">
+                  <UML:StructuralFeature.multiplicity>
+                    <UML:Multiplicity xmi.id="a348">
+                      <UML:Multiplicity.range>
+                        <UML:MultiplicityRange xmi.id="a349" lower="1" upper="1" />
+                      </UML:Multiplicity.range>
+                    </UML:Multiplicity>
+                  </UML:StructuralFeature.multiplicity>
+                  <UML:StructuralFeature.type>
+                    <UML:DataType xmi.idref="a166" />
+                  </UML:StructuralFeature.type>
+                </UML:Attribute>
+              </UML:Classifier.feature>
+            </UML:Class>
+            <UML:DataType xmi.id="a169" name="boolean" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false">
+              <UML:GeneralizableElement.generalization>
+                <UML:Generalization xmi.idref="a170" />
+              </UML:GeneralizableElement.generalization>
+            </UML:DataType>
+            <UML:DataType xmi.id="a166" name="int" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false">
+              <UML:GeneralizableElement.generalization>
+                <UML:Generalization xmi.idref="a167" />
+              </UML:GeneralizableElement.generalization>
+            </UML:DataType>
+          </UML:Namespace.ownedElement>
+        </UML:Package>
+        <UML:Package xmi.id="a350" name="java" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false">
+          <UML:Namespace.ownedElement>
+            <UML:Package xmi.id="a351" name="lang" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false">
+              <UML:Namespace.ownedElement>
+                <UML:Class xmi.id="a172" name="String" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false">
+                  <UML:GeneralizableElement.generalization>
+                    <UML:Generalization xmi.idref="a173" />
+                  </UML:GeneralizableElement.generalization>
+                </UML:Class>
+              </UML:Namespace.ownedElement>
+            </UML:Package>
+          </UML:Namespace.ownedElement>
+        </UML:Package>
+      </UML:Namespace.ownedElement>
+    </UML:Model>
+    <UML:Enumeration xmi.id="a193" name="OclState" visibility="public" isSpecification="false" isRoot="false" isLeaf="false" isAbstract="false">
+      <UML:Classifier.feature>
+        <UML:Operation xmi.id="a352" name="=" visibility="public" isSpecification="false" ownerScope="instance" isQuery="true" concurrency="sequential" isRoot="false" isLeaf="false" isAbstract="false">
+          <UML:BehavioralFeature.parameter>
+            <UML:Parameter xmi.id="a353" name="result" isSpecification="false" kind="return">
+              <UML:Parameter.type>
+                <UML:Primitive xmi.idref="a12" />
+              </UML:Parameter.type>
+            </UML:Parameter>
+            <UML:Parameter xmi.id="a354" name="object" isSpecification="false" kind="in">
+              <UML:Parameter.type>
+                <UML:Enumeration xmi.idref="a193" />
+              </UML:Parameter.type>
+            </UML:Parameter>
+          </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation xmi.id="a355" name="&lt;&gt;" visibility="public" isSpecification="false" ownerScope="instance" isQuery="true" concurrency="sequential" isRoot="false" isLeaf="false" isAbstract="false">
+          <UML:BehavioralFeature.parameter>
+            <UML:Parameter xmi.id="a356" name="result" isSpecification="false" kind="return">
+              <UML:Parameter.type>
+                <UML:Primitive xmi.idref="a12" />
+              </UML:Parameter.type>
+            </UML:Parameter>
+            <UML:Parameter xmi.id="a357" name="object" isSpecification="false" kind="in">
+              <UML:Parameter.type>
+                <UML:Enumeration xmi.idref="a193" />
+              </UML:Parameter.type>
+            </UML:Parameter>
+          </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+      </UML:Classifier.feature>
+    </UML:Enumeration>
+    
+    
+  </XMI.content>
+</XMI>

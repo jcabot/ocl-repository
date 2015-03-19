@@ -21,7 +21,7 @@ includes at least the following:
 * (Ideally) That same model stored in some kind of machine-processable format like XMI
 * A description.txt file with all the details you consider relevant to analyze your example, including at least the modeling tool used. 
 
-(not sure this submission schema works for your example, questions about what to submit, just get in touch or send a pull request to start the discussion)
+(not sure this submission schema works for your example?, questions about what to submit?, just get in touch or send a pull request to start the discussion)
 
 
 Other useful OCL-related stuff

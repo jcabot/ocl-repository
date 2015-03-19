@@ -1,0 +1,97 @@
+<?xml version = '1.0' encoding = 'UTF-8' ?>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Thu Apr 03 18:25:44 CEST 2008'>
+  <XMI.header>    <XMI.documentation>
+      <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
+      <XMI.exporterVersion>0.24(5) revised on $Date: 2006-11-06 19:55:22 +0100 (Mon, 06 Nov 2006) $ </XMI.exporterVersion>
+    </XMI.documentation>
+    <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
+  <XMI.content>
+    <UML:Model xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:000000000000077B'
+      name = 'diagram' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+      isAbstract = 'false'>
+      <UML:Namespace.ownedElement>
+        <UML:Class xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:000000000000077C'
+          name = 'Molecule' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false' isActive = 'false'/>
+        <UML:Class xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:000000000000077E'
+          name = 'Atom' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
+          <UML:Classifier.feature>
+            <UML:Attribute xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:0000000000000788'
+              name = 'weight' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+              changeability = 'changeable' targetScope = 'instance'>
+              <UML:StructuralFeature.multiplicity>
+                <UML:Multiplicity xmi.id = '-43-73-39--28-7c532785:119151a0aca:-8000:00000000000007F3'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '-43-73-39--28-7c532785:119151a0aca:-8000:00000000000007F2'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:StructuralFeature.multiplicity>
+              <UML:StructuralFeature.type>
+                <UML:DataType xmi.idref = '-43-73-39--28-59e59a1b:11914e1b563:-8000:0000000000000787'/>
+              </UML:StructuralFeature.type>
+            </UML:Attribute>
+            <UML:Attribute xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:00000000000007A0'
+              name = 'nobleGas' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+              changeability = 'changeable' targetScope = 'instance'>
+              <UML:StructuralFeature.multiplicity>
+                <UML:Multiplicity xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:00000000000007AE'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:00000000000007AD'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:StructuralFeature.multiplicity>
+              <UML:StructuralFeature.type>
+                <UML:DataType xmi.idref = '-43-73-39--28-59e59a1b:11914e1b563:-8000:00000000000007AF'/>
+              </UML:StructuralFeature.type>
+            </UML:Attribute>
+          </UML:Classifier.feature>
+        </UML:Class>
+        <UML:Association xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:0000000000000780'
+          name = 'Contains' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'>
+          <UML:Association.connection>
+            <UML:AssociationEnd xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:0000000000000781'
+              name = 'compound' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              <UML:AssociationEnd.multiplicity>
+                <UML:Multiplicity xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:00000000000007B7'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:00000000000007B6'
+                      lower = '1' upper = '-1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:AssociationEnd.multiplicity>
+              <UML:AssociationEnd.participant>
+                <UML:Class xmi.idref = '-43-73-39--28-59e59a1b:11914e1b563:-8000:000000000000077C'/>
+              </UML:AssociationEnd.participant>
+            </UML:AssociationEnd>
+            <UML:AssociationEnd xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:0000000000000784'
+              name = 'particle' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              <UML:AssociationEnd.multiplicity>
+                <UML:Multiplicity xmi.id = '-43-73-39--28-7c532785:119151a0aca:-8000:00000000000007F1'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '-43-73-39--28-7c532785:119151a0aca:-8000:00000000000007F0'
+                      lower = '3' upper = '-1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:AssociationEnd.multiplicity>
+              <UML:AssociationEnd.participant>
+                <UML:Class xmi.idref = '-43-73-39--28-59e59a1b:11914e1b563:-8000:000000000000077E'/>
+              </UML:AssociationEnd.participant>
+            </UML:AssociationEnd>
+          </UML:Association.connection>
+        </UML:Association>
+        <UML:DataType xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:0000000000000787'
+          name = 'int' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'/>
+        <UML:DataType xmi.id = '-43-73-39--28-59e59a1b:11914e1b563:-8000:00000000000007AF'
+          name = 'boolean' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'/>
+      </UML:Namespace.ownedElement>
+    </UML:Model>
+  </XMI.content>
+</XMI>

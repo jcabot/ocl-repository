@@ -1,0 +1,31 @@
+package model
+context AbWorld inv PredWorldAndSuccWorldExisting :
+    self.oclIsTypeOf( AbWorld ) implies
+      ( pred->size() = 1 and
+        succ->size() = 1 )
+endpackage
+
+package model
+context AbWorld inv AtMostOneInitialWorld :
+    AbInitWorld.allInstances->size() < 2
+
+endpackage
+
+package model
+context AbEndWorld inv PredWorldExisting :
+    pred->size() = 1
+  inv NoSuccWorldExisting :
+    succ->isEmpty()
+endpackage
+
+package model
+context Coin inv BelongsToPurse :
+    AbWorld.allInstances->forAll( world |
+      world.abAuthPurse->exists( purse |
+        ( purse.coinBalance->union( purse.coinLost ) )->includes( self ) ) )
+  inv NoCoinSharing :
+    ( purseBalance->union( purseLost ) )->forAll( purse1, purse2 |
+        purse1 <> purse2 implies 
+          purse1.abWorld <> purse2.abWorld )
+endpackage
+

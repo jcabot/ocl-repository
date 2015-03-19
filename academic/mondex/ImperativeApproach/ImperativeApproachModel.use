@@ -1,0 +1,104 @@
+model Abstract
+
+class AbWorld
+  operations
+    
+    abIgnore()
+      post WorldDoesNotChange :
+        abAuthPurse = abAuthPurse@pre and 
+        abAuthPurse@pre->forAll( purse |
+          -- Coins do not change their values
+          purse.coinBalance = purse.coinBalance@pre and
+          purse.coinLost = purse.coinLost@pre )
+    
+    abTransferOkay( fromPurse : AbPurse, toPurse : AbPurse, value : Set( Coin ) )
+      pre ParticipatingPursesMustExist : 
+        abAuthPurse->includesAll( Set{ fromPurse, toPurse } )
+      pre BalanceNotSmallerThanValue:
+        fromPurse.coinBalance->includesAll( value )
+      pre FromAndToDiffer : 
+        fromPurse <> toPurse
+      post SetOfPursesDoesNotChange: 
+        abAuthPurse = abAuthPurse@pre
+      post PursesNotParticipatingDoNotChange : 
+        ( abAuthPurse-Set{ fromPurse, toPurse } )->forAll( purse |
+            purse.coinBalance = purse.coinBalance@pre and
+            purse.coinLost = purse.coinLost@pre )
+      post FromPurseBalanceDecreases : 
+        fromPurse.coinBalance = fromPurse.coinBalance@pre - value
+      post FromPurseLostDoesNotChange : 
+        fromPurse.coinLost = fromPurse.coinLost@pre
+      post ToPurseBalanceIncreases : 
+        toPurse.coinBalance = toPurse.coinBalance@pre->union( value )
+      post ToPurseLostDoesNotChange :
+        toPurse.coinLost = toPurse.coinLost@pre
+      post ParticipatingPursesMustExistPostState : 
+        abAuthPurse->includesAll( Set{ fromPurse, toPurse } )
+      post NoValueCreation : 
+        abAuthPurse@pre->collect( p | p.coinBalance@pre )->flatten()->includesAll(
+          abAuthPurse->collect( p | p.coinBalance )->flatten() )
+      post AllValueAccounted : 
+        abAuthPurse->collect( p | p.coinBalance )->flatten()->union(
+          abAuthPurse->collect( p | p.coinLost )->flatten() ) =
+        abAuthPurse@pre->collect( p | p.coinBalance@pre )->flatten()->union(
+          abAuthPurse@pre->collect( p | p.coinLost@pre )->flatten() )
+          
+    abTransferLost(fromPurse : AbPurse, toPurse : AbPurse, value : Set( Coin ) )
+      pre ParticipatingPursesMustExist : 
+        abAuthPurse->includesAll( Set{ fromPurse, toPurse } )
+      pre FromAndToDiffer : 
+        fromPurse <> toPurse
+      pre BalanceNotSmallerThanValue: 
+        fromPurse.coinBalance->includesAll( value )
+      post SetOfPursesDoesNotChange: 
+        abAuthPurse = abAuthPurse@pre
+      post PursesNotParticipatingDoNotChange : 
+        ( abAuthPurse-Set{ fromPurse, toPurse } )->forAll( purse |
+            purse.coinBalance = purse.coinBalance@pre and
+            purse.coinLost = purse.coinLost@pre )
+      post FromPurseBalanceDecreases : 
+        fromPurse.coinBalance = fromPurse.coinBalance@pre - value
+      post FromPurseLostIncreases : 
+        fromPurse.coinLost = fromPurse.coinLost@pre->union( value )
+      post ToBalanceAndLostDoNotChange : 
+        toPurse.coinBalance = toPurse.coinBalance@pre and
+        toPurse.coinLost = toPurse.coinLost@pre
+      post ParticipatingPursesMustExistPostState : 
+        abAuthPurse->includesAll( Set{ fromPurse, toPurse } )
+      post NoValueCreation : 
+        abAuthPurse@pre->collect( p | p.coinBalance@pre )->flatten()->includesAll(
+          abAuthPurse->collect( p | p.coinBalance )->flatten() )
+      post AllValueAccounted : 
+        abAuthPurse->collect( p | p.coinBalance )->flatten()->union(
+          abAuthPurse->collect( p | p.coinLost )->flatten() ) =
+        abAuthPurse@pre->collect( p | p.coinBalance@pre )->flatten()->union(
+          abAuthPurse@pre->collect( p | p.coinLost@pre )->flatten() )
+end
+
+class AbPurse
+end
+
+class Coin
+constraints
+  inv NoCoinSharing :
+    purseBalance <> oclUndefined( AbPurse ) xor 
+    purseLost <> oclUndefined( AbPurse )
+end
+
+association Balance
+between
+  AbPurse[0..1] role purseBalance
+  Coin[*] role coinBalance
+end
+
+association Lost
+between
+  AbPurse[0..1] role purseLost
+  Coin[*] role coinLost
+end
+
+association AbstractAuthenticPurses
+between
+  AbWorld[1] 
+  AbPurse[*] role abAuthPurse
+end
