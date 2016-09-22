@@ -1,0 +1,29 @@
+<extensions>
+	<operation source="Sequence(Real)" name="sum" returnType="Sequence(Real)">
+		<parameter>
+			<par name="x" type="Sequence(Real)" />
+		</parameter>
+		<body><![CDATA[
+			(0..$self.size-1).map{ |i| $self[i] + $x[i] }
+		]]>
+		</body>
+	</operation>
+	<operation source="Sequence(Real)" name="minus" returnType="Sequence(Real)">
+		<parameter>
+			<par name="x" type="Sequence(Real)" />
+		</parameter>
+		<body><![CDATA[
+			(0..$self.size-1).map{ |i| $self[i] - $x[i] }
+		]]>
+		</body>
+	</operation>
+	<operation source="Sequence(Real)" name="mult" returnType="Sequence(Real)">
+		<parameter>
+			<par name="s" type="Real" />
+		</parameter>
+		<body><![CDATA[
+			(0..$self.size-1).map{ |i| $s*$self[i] }
+ 		]]>
+		</body>
+	</operation>
+</extensions>

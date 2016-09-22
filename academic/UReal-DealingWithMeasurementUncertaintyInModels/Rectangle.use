@@ -1,0 +1,232 @@
+
+-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+-- This model provides an example of use of type "UReal" 
+-- and its operations, using a Rectangle.
+--
+-- Type UReal specifications are included as part of the model
+-- See also the paper 
+--
+-- AUTHOR:  A. Vallecillo. av@lcc.uma.es
+-- VERSION: 1.0
+-- DATE: 8 Sep 2016
+-- 
+-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+model Rectangle
+
+class Rectangle
+
+attributes
+  x: UReal -- position X of left-down corner
+  y: UReal -- position Y of left-down corner
+  h: UReal -- height
+  w: UReal -- width
+
+operations
+
+area() :UReal
+-- In OCL (declarative)
+-- post: result = (self.h).mult(self.w)
+-- 
+-- In SOIL (imperative)
+  begin 
+    result:= (self.h).mult(self.w);
+  end
+
+fitsIn(base :Rectangle) :Boolean 
+-- In OCL (declarative)
+--  = base.x.lessEq(self.x) and
+--    self.x.add(self.w).lessEq(base.x.add(base.w)) and
+--    base.y.lessEq(self.y) and
+--    self.y.add(self.h).lessEq(base.y.add(base.h))
+-- 
+-- In SOIL (imperative)
+      begin
+       declare XW : UReal, BW : UReal, YH : UReal, BH : UReal; 
+        XW:=new UReal;
+        BW:=new UReal;
+        YH:=new UReal;
+        BH:=new UReal;
+
+        XW :=(self.x).add(self.w);
+        BW :=(base.x).add(base.w);
+        YH :=(self.y).add(self.h);
+        BH :=(base.y).add(base.h);
+        result := (base.x).lessEq(self.x) and 
+                  XW.lessEq(BW) and
+                  (base.y).lessEq(self.y) and
+                  YH.lessEq(BH);
+    end   
+
+move (deltaH :UReal, deltaW :UReal) : Rectangle
+-- In OCL (declarative)
+-- post: result.x = self.x.add(deltaW) and
+--       result.y = self.y.add(deltaH) and
+--       result.h = self.h and
+--       result.w = self.w 
+--
+-- In SOIL (imperative)
+   begin
+       declare aux : Rectangle;
+       aux := new Rectangle;
+       aux.x := self.x.add(deltaW);
+       aux.y := self.y.add(deltaH);
+       aux.h := self.h;
+       aux.w := self.w;
+       result := aux;
+   end   
+
+end
+
+---------------------------------------
+---------------------------------------
+class UReal
+
+attributes
+    x : Real
+    u : Real
+
+operations
+
+add(r : UReal) : UReal
+    begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := self.x + r.x;
+        aux.u := (self.u*self.u + r.u*r.u).sqrt();
+        result := aux;
+    end   
+
+minus(r : UReal) : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := self.x - r.x;
+        aux.u := (self.u*self.u + r.u*r.u).sqrt();
+        result := aux;
+    end   
+   
+mult(r : UReal) : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := self.x*r.x;
+        aux.u := (r.u*r.u*self.x*self.x + self.u*self.u*r.x*r.x).sqrt();
+        result := aux;
+     end   
+    
+divideBy(r : UReal) : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := (self.x/r.x + (self.x*r.u*r.u)/(r.x*r.x*r.x));
+        aux.u := ((self.u*self.u/r.x) + 
+                 ((r.u*r.u*self.x*self.x)/(r.x*r.x*r.x*r.x))).sqrt();
+        result := aux;
+    end   
+
+   
+abs() : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := (self.x).abs();
+        aux.u := self.u;
+        result := aux;
+    end   
+    
+neg() : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := -self.x;
+        aux.u := self.u;
+        result := aux;
+    end   
+
+floor() : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := self.x.floor();
+        aux.u := self.u;
+        result := aux;
+    end   
+    
+round() : UReal
+    begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := self.x.round();
+        aux.u := self.u;
+        result := aux;
+    end   
+    
+    
+inverse() : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := 1.0;
+        aux.u := 0.0;
+        result := aux.divideBy(self);
+    end   
+    
+power (s : Real) : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := self.x.power(s) + ((s*(s-1))/2)*self.x.power(s-2)*(self.u*self.u);
+        aux.u := s*self.u*self.x.power(s-1);
+        result := aux;
+    end   
+    
+sqrt() : UReal 
+    begin
+        declare aux : UReal;
+        aux := self.power(0.5);
+        result := aux;
+    end
+   
+-- comparison operations
+
+equals(r : UReal) : Boolean 
+   = (self.x - self.u).max(r.x - r.u) <= 
+         (self.x + self.u).min(r.x + r.u)
+    
+distinct(r : UReal) : Boolean
+    = not self.equals(r) 
+
+compareTo(r : UReal) : Integer
+    = if self.equals(r) then 0
+      else if self.lessThan(r) then -1 
+           else 1 
+           endif 
+      endif
+
+lessThan(r : UReal) : Boolean
+   = (self.x<r.x) and ((self.x + self.u)<(r.x - r.u)) 
+
+lessEq(r : UReal) : Boolean 
+   = self.lessThan(r) or self.equals(r)
+    
+max(r : UReal) : UReal
+    = if r.lessThan(self) then self else r endif
+   
+min(r : UReal) : UReal
+    = if r.lessThan(self) then r else self endif
+
+end
+
+constraints -- precondition on operations
+
+context UReal::divideBy(r : UReal) : UReal
+pre:  (r.x - r.u).max(0) > (r.x + r.u).min(0) --not r.equals(0,0)
+
+context UReal::sqrt() : UReal
+pre:  (self.x + self.u)>=0.0 
+
+context UReal::inverse() : UReal
+    pre:  (self.x - self.u).max(0) > (self.x + self.u).min(0) -- not self.equals(0.0)
+

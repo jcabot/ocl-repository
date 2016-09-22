@@ -1,0 +1,138 @@
+-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+-- This file provides the OCL specification of the 
+-- operations of type "UReal", as defined in the paper 
+-- "Expressing Measurement Uncertainty in Software Models" 
+-- by A. Vallecillo, C. Morcillo, P. Orue. In Proc. of QUATIC 2016.
+--
+-- It assumes uncertainties follow normal distributions.
+--
+-- A companion file "UReal.use" contains the OCL specifications 
+-- defined using SOIL (Simple OCL-like Imperative Language). The advantage
+-- of SOIL specificatios is that they can be executed in USE. For more information 
+-- about SOIL see http://www.db.informatik.uni-bremen.de/publications/Buettner_2014_SCPSOIL.pdf
+--
+-- This module assumes operations "sqrt" and "power" on OCL type Real, 
+-- currently not supported because they are not included in the OCL standard.
+--
+-- They have been included in the extensions to USE using its
+-- predefined extensions mechanisms (they need to be placed in the USE 
+-- folder "oclExtensions")
+-- 
+-- AUTHOR:  A. Vallecillo. av@lcc.uma.es
+-- VERSION: 1.0
+-- DATE: 8 Sep 2016
+-- 
+-- Thanks to Priscill Orue, Carmen Morcillo and Martin Gogolla for their help,
+-- comments and suggestions on previous versions of this OCL/USE specification
+--
+
+-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+-- assumes operations "sqrt" and "power" on OCL type Real.
+-- Their expected signature is as follows: 
+-- context Real::sqrt():Real
+-- context Real::power(exp:Real):Real
+
+-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+-- Definiton of the UReal class -- USE specific
+-- 
+-- class UReal
+-- attributes
+--     x : Real
+--     u : Real
+-- operations
+--     add(r : UReal) : UReal
+--     minus(r : UReal) : UReal
+--     mult(r : UReal) : UReal
+--     divideBy(r : UReal) : UReal
+--     abs() : UReal
+--     neg() : UReal
+--     inverse() : UReal
+--     power (s : Real) : UReal
+--     sqrt() : UReal
+--     lessThan(r : UReal) : Boolean 
+--     lessEq(r : UReal) : Boolean 
+--     equals(r : UReal) : Boolean 
+--     distinct(r : UReal) : Boolean 
+--     max(r : UReal) : UReal
+--     min(r : UReal) : UReal
+--     floor() : UReal
+--     round() : UReal
+-- end
+
+context UReal::add(r : UReal) : UReal
+post: result.x = self.x + r.x and
+      result.u = (self.u*self.u + r.u*r.u).sqrt()
+
+context UReal::minus(r : UReal) : UReal
+post: result.x = self.x - r.x and
+      result.u = (self.u*self.u - r.u*r.u).sqrt()
+
+context UReal::mult(r : UReal) : UReal
+post: result.x = (self.x*r.x) and
+      result.u = (r.u*r.u*self.x*self.x + self.u*self.u*r.x*r.x).sqrt()
+
+context UReal::divideBy(r : UReal) : UReal
+  pre:  (r.x - r.u).max(0) > (r.x + r.u).min(0) -- not r.equals(0,0)
+  post: result.x = (self.x/r.x + (self.x*r.u*r.u)/(r.x*r.x*r.x)) and
+        result.u = ((self.u*self.u/r.x) + 
+                    ((r.u*r.u*self.x*self.x)/(r.x*r.x*r.x*r.x))).sqrt()
+
+context UReal::abs() : UReal
+  post: result.x = (self.x).abs() and
+        result.u = self.u
+
+context UReal::neg() : UReal
+  post: result.x = -self.x and 
+        result.u = self.u
+
+context UReal::power(s : Real) : UReal
+  post: result.x = self.x.power(s) + 
+                   ((s*(s-1))/2)*self.x.power(s-2)*(self.u*self.u) and
+        result.u = s*self.u*self.x.power(s-1)
+
+context UReal::inverse() : UReal
+    pre: (self.x - self.u).max(0) > (self.x + self.u).min(0) --not r.equals(0,0)
+    post: result.x = 1/self.x and result.u = self.u
+
+context UReal::sqrt() : UReal
+    pre: (self.x + self.u)>=0.0  -- self>=0
+    post: result = self.power(0.5)
+    
+context UReal::floor() :UReal
+  post: result.x = self.x.floor() and
+        result.u = self.u
+
+context UReal::round() :UReal
+  post: result.x = self.x.round() and
+        result.u = self.u
+
+-- comparison operations
+
+context UReal::equals(r : UReal) : Boolean 
+  post: result = (self.x - self.u).max(r.x - r.u) <= 
+                 (self.x + self.u).min(r.x + r.u)
+
+context UReal::distinct(r : UReal) : Boolean 
+  post: result = not self.equals(r)
+
+context UReal::compareTo(r : UReal) : Integer
+  post: result = if self.equals(r) then 0
+                 else if self.lessThan(r) then -1 
+                       else 1 
+                      endif 
+                 endif
+
+context UReal::lessThan(r : UReal) : Boolean 
+  post: result = (self.x<r.x) and ((self.x + self.u)<(r.x - r.u))
+ 
+context UReal::lessEq(r : UReal) : Boolean 
+  post: result = self.lessThan(r) or self.equals(r)
+
+context UReal::max(r :UReal) :UReal
+  post: result = if r.lessThan(self) then self
+                 else r endif
+
+context UReal::min(r :UReal) :UReal
+  post: result = if r.lessThan(self) then r
+                 else self endif
+

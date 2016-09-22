@@ -1,0 +1,72 @@
+This directory provides the OCL specification of type "UReal" and
+its operations, as defined in the paper "Expressing Measurement
+Uncertainty in Software Models" by A. Vallecillo, C. Morcillo, P.
+Orue. In Proc. of QUATIC 2016.
+
+This new type permits the specification of torelance in model
+attributes, being able to express that a value is 3 +/- 0.00001 as
+required by most Engineering models.
+
+For this, values are specified by a pair (x,u) where "x" represents
+the value, and "u" its associated uncertainty -- according to the
+"Guide to Uncertainty in Measurement" (GUM) international standard.
+
+Thus, type UReal defines two attributes: the value (x) and its
+associated uncertainty (u). The key issue is not so much how to
+represent uncertain values, but being able to operate with
+them in the models (for instance, to calculate the values of 
+derived attributes).
+
+The operations have been specified using both OCL standard and
+also SOIL (Simple OCL-like Imperative Language), which is part of
+USE http://www.db.informatik.uni-bremen.de/publications/Buettner_2014_SCPSOIL.pdf
+
+The benefits of this approach is that SOIL specification can be
+executed. The OCL specifications of the operations using OCL pre-
+and post-conditions can be found in the file "UReal.ocl". 
+The USE specifications are in file "UReal.use". An example that uses
+values with uncertainty to specify a Rectangle class is also included here 
+for illustration purposes.
+
+More precisely, this directory contains several files:
+
+- QUATIC2016-paper.pdf: the original paper where the problem is
+motivated and the solution described. In particular, type UReal is
+decribed and documented.
+
+- UReal-UMLType.jpg: image with the UML spec of type UReal
+
+- UReal.ocl: the OCL specifications of type UReal and its operations
+
+- UReal.use: the OCL specifications of type UReal and its operations
+  in USE: they can be simulated and executed with the USE tool
+
+- URealBasicExamples.use: basic examples of how to execute USE specs 
+  that make use of type UReal
+
+- Rectangle-OCL-USE.pdf. The complete description and
+  specifications of the Rectangle class, using type UReal to have
+  into account tolerance in values.
+
+- Rectangle.ocl: the OCL specification of class Rectangle and its
+  operations
+
+- Rectangle.use: the USE specification of class Rectangle and its
+  operations: they can be simulated and executed with the USE tool
+
+- Rectangle-execution.use: example of how the USE specs can be
+  executed
+
+- oclextensions: This folder contains two extensions required to
+  provide the standard USE distribution package with operations
+  sqrt() and power() for Real, and some additional operations on type
+  Sequence (to sum their elements and multiply them by scalars). As
+  described in the paper, UReal specifications in OCL assume
+  operations "sqrt" and "power" on OCL type Real, currently not
+  defined in the OCL standard. Similarly for the "sum", "minus" (sum
+  and subtraction of arrays) and "mult" (multiplication by a scalar)
+  operations on Sequence(Real). These operations have been included
+  in the extensions to USE using its predefined extensions
+  mechanisms. Then, these files "Real.xml" and "Sequence.xml" need to
+  be placed in the USE folder "oclExtensions". (in case files with
+ the same names exist in that folder, please merge their contents).)

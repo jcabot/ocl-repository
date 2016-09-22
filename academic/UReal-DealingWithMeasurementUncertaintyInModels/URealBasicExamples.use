@@ -1,0 +1,103 @@
+-- EXAMPLE OF USES OF UReal VALUES
+!new UReal('u1')
+!new UReal('u2')
+!new UReal('u3')
+!new UReal('result')
+!new Boolean('b')
+!u1.x :=10.0
+!u1.u :=0.002
+!u2.x :=20.0
+!u2.u :=0.001
+!result:=u1.add(u2) 
+?result.x  -- should be ~30
+?result.u
+!result:=u1.minus(u2) 
+?result.x  -- should be ~ -10
+?result.u
+!result:=u1.mult(u2)
+?result.x  -- should be ~ -200
+?result.u
+!result:=u1.divideBy(u2) 
+?result.x  -- should be ~0.5
+?result.u
+!result:=u1.inverse() 
+?result.x  -- should be ~0.1
+?result.u
+!u3:=u1.minus(u2)
+!result:=u3.abs() 
+?result.x -- should be ~10
+?result.u
+!result:=u1.power(2) 
+?result.x  -- should be ~100
+?result.u
+!result:=u1.neg() 
+?result.x  -- should be ~ -10
+?result.u
+!result:=u1.sqrt() 
+?result.x  -- should be ~3.16
+?result.u
+!b:=u1.lessThan(u2) 
+?b -- should be true
+!b:=u2.lessEq(u1) 
+?b -- should be false
+!b:=u1.equals(u2)
+?b -- should be false
+!b:=u1.distinct(u2) 
+?b -- should be true
+!b:=u1.equals(u1) 
+?b -- should be true
+!b:=u1.distinct(u1) 
+?b -- should be false
+!result:=u1.min(u2) 
+?result.x  -- should be ~10
+?result.u
+!result:=u1.max(u2) 
+?result.x  -- should be ~20
+?result.u
+!result:=u2.min(u1) 
+?result.x  -- should be ~10
+?result.u
+!result:=u2.max(u1) 
+?result.x  -- should be ~20
+?result.u
+!u3:=u1.sqrt() 
+!result:=u3.floor()
+?result.x  -- should be 3
+?result.u
+!result:=u3.round()
+?result.x  -- should be 3
+?result.u
+!u1.x :=3.1
+!u1.u :=0.001
+!u2.x :=3.5
+!u2.u :=0.001
+!u3.x :=3.6
+!u3.u :=0.001
+!result:=u1.floor()
+?result.x  -- should be 3
+?result.u
+!result:=u1.round()
+?result.x  -- should be 3
+?result.u
+!result:=u2.floor()
+?result.x  -- should be 3
+?result.u
+!result:=u2.round()
+?result.x  -- should be 3
+?result.u
+!result:=u3.floor()
+?result.x  -- should be 3
+?result.u
+!result:=u3.round()
+?result.x  -- should be 4
+?result.u
+--checking violations of preconditions
+--!u1.x :=3.0
+--!u1.u :=0.001
+--!u2.x :=0.0
+--!u2.u :=0.001
+--!u3.x :=-1.0
+--!u3.u :=0.001
+--!result:=u1.divideBy(u2)
+--!result:=u2.inverse()
+--!result:=u3.sqrt()

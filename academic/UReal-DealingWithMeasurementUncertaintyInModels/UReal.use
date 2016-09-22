@@ -1,0 +1,188 @@
+model UReal
+
+-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+-- This file provides the OCL specification of the 
+-- operations of type "UReal", as defined in the paper 
+-- "Expressing Measurement Uncertainty in Software Models" 
+-- by A. Vallecillo, C. Morcillo, P. Orue. In Proc. of QUATIC 2016.
+--
+-- It assumes uncertainties follow normal distributions.
+--
+-- The operations have been specified using SOIL 
+-- (Simple OCL-like Imperative Language) which is part of USE
+-- http://www.db.informatik.uni-bremen.de/publications/Buettner_2014_SCPSOIL.pdf
+-- The benefits of this approach is that SOIL specification can be executed.
+--
+-- The OCL specifications of the operations using OCL pre- and post-conditions
+-- can be found in the companion file "UReal.ocl".
+--
+-- This module assumes operations "sqrt" and "power" on OCL type Real, 
+-- currently not supported because they are not included in the OCL standard.
+-- Similarly for the "sum", "minus" (sum and subtraction of arrays)
+-- and "mult" (multiplication by a scalar) operations on Sequence(Real)
+-- 
+-- These operations have been included in the extensions to USE using its
+-- predefined extensions mechanisms (files "Real.xml" and "Sequence.xml" need 
+-- to be placed in the USE folder "oclExtensions"). Warning: in case these files 
+-- already exist in the oclExtensions folder, please make sure the contents of 
+-- the new ones extend what is currently in the existing ones.
+-- 
+-- AUTHOR:  A. Vallecillo. av@lcc.uma.es
+-- VERSION: 1.0
+-- DATE: 8 Sep 2016
+-- 
+-- Thanks to Priscill Orue, Carmen Morcillo and Martin Gogolla for their help,
+-- comments and suggestions on previous versions of this OCL/USE specification
+--
+
+-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+class UReal
+
+attributes
+    x : Real
+    u : Real
+
+operations
+
+add(r : UReal) : UReal
+    begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := self.x + r.x;
+        aux.u := (self.u*self.u + r.u*r.u).sqrt();
+        result := aux;
+    end   
+
+minus(r : UReal) : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := self.x - r.x;
+        aux.u := (self.u*self.u + r.u*r.u).sqrt();
+        result := aux;
+    end   
+   
+mult(r : UReal) : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := self.x*r.x;
+        aux.u := (r.u*r.u*self.x*self.x + self.u*self.u*r.x*r.x).sqrt();
+        result := aux;
+     end   
+    
+divideBy(r : UReal) : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := (self.x/r.x + (self.x*r.u*r.u)/(r.x*r.x*r.x));
+        aux.u := ((self.u*self.u/r.x) + 
+                 ((r.u*r.u*self.x*self.x)/(r.x*r.x*r.x*r.x))).sqrt();
+        result := aux;
+    end   
+
+   
+abs() : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := (self.x).abs();
+        aux.u := self.u;
+        result := aux;
+    end   
+    
+neg() : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := -self.x;
+        aux.u := self.u;
+        result := aux;
+    end   
+
+floor() : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := self.x.floor();
+        aux.u := self.u;
+        result := aux;
+    end   
+    
+round() : UReal
+    begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := self.x.round();
+        aux.u := self.u;
+        result := aux;
+    end   
+    
+    
+inverse() : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := 1.0;
+        aux.u := 0.0;
+        result := aux.divideBy(self);
+    end   
+    
+power (s : Real) : UReal
+     begin
+        declare aux : UReal;
+        aux := new UReal;
+        aux.x := self.x.power(s) + ((s*(s-1))/2)*self.x.power(s-2)*(self.u*self.u);
+        aux.u := s*self.u*self.x.power(s-1);
+        result := aux;
+    end   
+    
+sqrt() : UReal 
+    begin
+        declare aux : UReal;
+        aux := self.power(0.5);
+        result := aux;
+    end
+   
+-- comparison operations
+
+equals(r : UReal) : Boolean 
+   = (self.x - self.u).max(r.x - r.u) <= 
+         (self.x + self.u).min(r.x + r.u)
+    
+distinct(r : UReal) : Boolean
+    = not self.equals(r) 
+
+compareTo(r : UReal) : Integer
+    = if self.equals(r) then 0
+      else if self.lessThan(r) then -1 
+           else 1 
+           endif 
+      endif
+
+lessThan(r : UReal) : Boolean
+   = (self.x<r.x) and ((self.x + self.u)<(r.x - r.u)) 
+
+lessEq(r : UReal) : Boolean 
+   = self.lessThan(r) or self.equals(r)
+    
+max(r : UReal) : UReal
+    = if r.lessThan(self) then self else r endif
+   
+min(r : UReal) : UReal
+    = if r.lessThan(self) then r else self endif
+
+end
+
+constraints -- precondition on operations
+
+context UReal::divideBy(r : UReal) : UReal
+pre:  (r.x - r.u).max(0) > (r.x + r.u).min(0) --not r.equals(0,0)
+
+context UReal::sqrt() : UReal
+pre:  (self.x + self.u)>=0.0 
+
+context UReal::inverse() : UReal
+    pre:  (self.x - self.u).max(0) > (self.x + self.u).min(0) -- not self.equals(0.0)
+

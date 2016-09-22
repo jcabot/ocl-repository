@@ -1,0 +1,84 @@
+-- Rectangle example, using UReal values
+
+!new UReal('x1')
+!new UReal('y1')
+!new UReal('w1')
+!new UReal('h1')
+!new UReal('dh') 
+!new UReal('dw')
+!new UReal('arear')
+!new UReal('areas')
+!new UReal('areat')
+!new Boolean ("b")
+!new Rectangle('r')
+!new Rectangle('s')
+!new Rectangle('t')
+
+!x1.x :=0.0;
+!x1.u :=0.0001;
+!y1:=x1;
+!w1.x:=10.0;
+!w1.u :=0.0001;
+!h1.x :=20.0;
+!h1.u :=0.0001;
+
+-- first rectangle
+!r.x :=x1;
+!r.y :=y1;
+!r.w :=w1;
+!r.h :=h1;
+
+-- second rectangle
+!s.x :=x1;
+!s.y :=y1;
+!s.w :=w1.add(w1);
+!s.h :=h1;
+
+
+!arear:=r.area(); -- area of r
+?arear.x
+?arear.u
+
+!areas:=s.area(); -- area of s
+?areas.x
+?areas.u
+!b:=areas.equals(arear);
+?b
+
+!b:=r.fitsIn(s);
+?b
+
+!b:=s.fitsIn(r);
+?b
+
+-- Let's move
+-- first, define the deltas
+!dw.x := 0.1;
+!dw.u := 0.0001;
+!dh.x := 0.1;
+!dh.u := 0.0001;
+
+!t:=r.move(dw,dh);
+!b:=t.fitsIn(s);
+?b
+!areat:=t.area(); -- ==area of r
+?areat.x
+?areat.u
+!b:=areat.equals(arear);
+?b
+--let's see the moved rectangle
+!x1:=t.x;
+!y1:=t.y;
+!h1:=t.h;
+!w1:=t.w;
+?x1.x
+?x1.u
+?y1.x
+?y1.u
+?w1.x
+?w1.u
+?h1.x
+?h1.u
+
+
+

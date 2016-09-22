@@ -1,0 +1,26 @@
+<extensions>
+  <operation source="Real" name="ceil" returnType="Integer">
+	<body><![CDATA[
+		$self.ceil
+	]]>
+	</body>
+  </operation>
+
+  <operation source="Real" name="sqrt" returnType="Real">
+	<body><![CDATA[
+		Math.sqrt($self)
+	]]>
+	</body>
+  </operation>
+
+  <operation source="Real" name="power" returnType="Real">
+		<parameter>
+			<par name="e" type="Real" />
+		</parameter>
+	<body><![CDATA[
+		$self ** $e
+	]]>
+	</body>
+  </operation>
+
+</extensions>
