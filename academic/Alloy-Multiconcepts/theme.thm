@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view nodetheme="Martha" edgetheme="Martha">
+
+<defaultnode/>
+
+<defaultedge/>
+
+<node>
+   <type name="B1"/>
+   <type name="B2"/>
+   <type name="Bakery"/>
+   <type name="Bread"/>
+   <type name="Bundle"/>
+   <type name="Butter"/>
+   <type name="Category"/>
+   <type name="Dairy"/>
+   <type name="Int"/>
+   <type name="Item"/>
+   <type name="Milk"/>
+   <type name="String"/>
+   <type name="univ"/>
+   <type name="seq/Int"/>
+</node>
+
+<node visible="no">
+   <type name="BelongsTo/Head"/>
+   <type name="Contains/Head"/>
+   <type name="Result/Head"/>
+</node>
+
+<edge visible="no">
+   <relation name="$composedFrom_p1"> <type name="Result/Head"/> <type name="univ"/> </relation>
+   <relation name="$composedFrom_p2"> <type name="Result/Head"/> <type name="univ"/> </relation>
+   <relation name="belongsTo"> <type name="Item"/> <type name="Category"/> </relation>
+   <relation name="sLeg"> <type name="BelongsTo/Head"/> <type name="Item"/> </relation>
+   <relation name="sLeg"> <type name="Contains/Head"/> <type name="Bundle"/> </relation>
+   <relation name="sLeg"> <type name="Result/Head"/> <type name="Bundle"/> </relation>
+   <relation name="tLeg"> <type name="BelongsTo/Head"/> <type name="Category"/> </relation>
+   <relation name="tLeg"> <type name="Contains/Head"/> <type name="Item"/> </relation>
+   <relation name="tLeg"> <type name="Result/Head"/> <type name="Category"/> </relation>
+</edge>
+
+</view>
+
+</alloy>
