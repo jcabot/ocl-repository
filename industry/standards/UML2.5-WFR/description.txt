@@ -1,5 +1,5 @@
 Name: Well-formedness rules part of the specification of the UML 2.5 OMG Standard
-Tool: Eclipse UML plugin 
+Tool: Eclipse OCL plugin 
 Description: OCL expressions extracted by Ed Willink from the OMG's official UML.xmi late in the UML 2.5 submission process.
 Notes: File is part of this eclipse repository http://git.eclipse.org/c/ocl/org.eclipse.ocl.git/tree/examples/org.eclipse.ocl.examples.uml25/model/UML.ocl
 In that same URL you can find other files that can help in the execution of this example if necessary
